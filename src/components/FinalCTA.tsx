@@ -39,7 +39,7 @@ export default function FinalCTA() {
 
         <div className="reveal mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
           <a
-            href="https://pay.kirvano.com/a38b98ce-82c2-4d00-9a96-ea59ce42b4bc"
+            href="https://jazzautomations.zo.space/download"
             target="_blank"
             className="btn-primary"
           >
