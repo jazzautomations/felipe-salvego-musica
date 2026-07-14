@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, FormEvent } from "react";
-import { Loader2, CheckCircle, AlertCircle } from "lucide-react";
+import { useState } from "react";
+
+const API_URL = "/api/baixar-lead";
 
 export default function LeadForm() {
   const [nome, setNome] = useState("");
@@ -9,65 +10,60 @@ export default function LeadForm() {
   const [whatsapp, setWhatsapp] = useState("");
   const [consentiu, setConsentiu] = useState(false);
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-  const [errorMsg, setErrorMsg] = useState("");
+  const [msg, setMsg] = useState("");
 
-  async function handleSubmit(e: FormEvent) {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!consentiu) {
-      setErrorMsg("Você precisa aceitar os termos LGPD.");
-      setStatus("error");
-      return;
-    }
+    if (!nome.trim() || !email.trim() || !consentiu) return;
+
     setStatus("loading");
-    setErrorMsg("");
+    setMsg("");
 
     try {
-      const res = await fetch("https://jazzautomations.zo.space/api/baixar-lead", {
+      const res = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ nome, email, whatsapp, consentiu }),
+        body: JSON.stringify({
+          nome: nome.trim(),
+          email: email.trim(),
+          whatsapp: whatsapp.trim() || null,
+          consentiu,
+        }),
       });
 
       const data = await res.json();
-      if (!data.ok) {
-        setErrorMsg(data.error || "Erro ao registrar. Tente novamente.");
+
+      if (!res.ok) {
         setStatus("error");
+        setMsg(data.error || "Erro ao processar. Tente novamente.");
         return;
       }
 
       setStatus("success");
-
-      // Inicia download do PDF
-      const link = document.createElement("a");
-      link.href = "https://jazzautomations.zo.space/assets/livro-musica-matematica.pdf";
-      link.download = "A-Musica-e-a-Matematica-da-Natureza-Felipe-Salvego.pdf";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      // redireciona pro PDF
+      window.location.href = data.download_url || "/livro-musica-matematica.pdf";
     } catch {
-      setErrorMsg("Erro de conexão. Verifique sua internet e tente de novo.");
       setStatus("error");
+      setMsg("Erro de conexão. Tente novamente.");
     }
-  }
+  };
 
   if (status === "success") {
     return (
-      <div className="flex flex-col items-center gap-4 py-8 text-center">
-        <CheckCircle className="size-12 text-emerald-400" />
-        <p className="text-lg font-medium text-emerald-300">Tudo pronto! O download já começou 🎵</p>
-        <p className="text-sm text-stone-400">
+      <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] p-8 text-center backdrop-blur-sm">
+        <div className="mx-auto mb-4 flex size-16 items-center justify-center rounded-full bg-emerald-500/20 text-3xl text-emerald-400">
+          ✓
+        </div>
+        <p className="text-lg font-medium text-[var(--color-fg)]">
           Se o download não iniciar,{" "}
           <a
-            href="https://jazzautomations.zo.space/assets/livro-musica-matematica.pdf"
-            className="underline hover:text-emerald-300"
+            href="/livro-musica-matematica.pdf"
+            className="underline underline-offset-2 hover:text-[var(--color-accent)]"
             download
           >
             clique aqui
           </a>
           .
-        </p>
-        <p className="mt-2 text-xs text-stone-500">
-          Bons estudos — e lembre-se: a música é a matemática que pode ser ouvida.
         </p>
       </div>
     );
@@ -76,8 +72,8 @@ export default function LeadForm() {
   return (
     <form onSubmit={handleSubmit} className="mx-auto w-full max-w-md space-y-4">
       <div>
-        <label htmlFor="nome" className="mb-1 block text-sm font-medium text-stone-300">
-          Seu nome <span className="text-red-400">*</span>
+        <label htmlFor="nome" className="mb-1 block text-sm font-medium text-[var(--color-muted)]">
+          Nome <span className="text-red-400">*</span>
         </label>
         <input
           id="nome"
@@ -85,14 +81,14 @@ export default function LeadForm() {
           required
           value={nome}
           onChange={(e) => setNome(e.target.value)}
-          placeholder="Felipe Salvego"
-          className="w-full rounded-lg border border-stone-700 bg-stone-800/60 px-4 py-3 text-stone-100 placeholder-stone-500 outline-none transition focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+          placeholder="Seu nome"
+          className="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-card)] px-4 py-3 text-[var(--color-fg)] placeholder-[var(--color-muted)] outline-none transition focus:border-[var(--color-accent)] focus:ring-1 focus:ring-[var(--color-accent)]"
         />
       </div>
 
       <div>
-        <label htmlFor="email" className="mb-1 block text-sm font-medium text-stone-300">
-          Melhor e-mail <span className="text-red-400">*</span>
+        <label htmlFor="email" className="mb-1 block text-sm font-medium text-[var(--color-muted)]">
+          Email <span className="text-red-400">*</span>
         </label>
         <input
           id="email"
@@ -100,14 +96,14 @@ export default function LeadForm() {
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="felipe@exemplo.com"
-          className="w-full rounded-lg border border-stone-700 bg-stone-800/60 px-4 py-3 text-stone-100 placeholder-stone-500 outline-none transition focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+          placeholder="seu@email.com"
+          className="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-card)] px-4 py-3 text-[var(--color-fg)] placeholder-[var(--color-muted)] outline-none transition focus:border-[var(--color-accent)] focus:ring-1 focus:ring-[var(--color-accent)]"
         />
       </div>
 
       <div>
-        <label htmlFor="whatsapp" className="mb-1 block text-sm font-medium text-stone-300">
-          WhatsApp (opcional)
+        <label htmlFor="whatsapp" className="mb-1 block text-sm font-medium text-[var(--color-muted)]">
+          WhatsApp <span className="text-zinc-500">(opcional)</span>
         </label>
         <input
           id="whatsapp"
@@ -115,23 +111,24 @@ export default function LeadForm() {
           value={whatsapp}
           onChange={(e) => setWhatsapp(e.target.value)}
           placeholder="(11) 99999-8888"
-          className="w-full rounded-lg border border-stone-700 bg-stone-800/60 px-4 py-3 text-stone-100 placeholder-stone-500 outline-none transition focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+          className="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-card)] px-4 py-3 text-[var(--color-fg)] placeholder-[var(--color-muted)] outline-none transition focus:border-[var(--color-accent)] focus:ring-1 focus:ring-[var(--color-accent)]"
         />
       </div>
 
-      <label className="flex items-start gap-3 text-sm text-stone-400">
+      <label className="flex items-start gap-3 text-sm text-[var(--color-muted)]">
         <input
           type="checkbox"
           checked={consentiu}
           onChange={(e) => setConsentiu(e.target.checked)}
-          className="mt-0.5 size-4 accent-emerald-500"
+          className="mt-0.5 size-4 rounded border-[var(--color-border)] bg-[var(--color-card)] text-[var(--color-accent)] accent-[var(--color-accent)]"
         />
         <span>
-          Aceito receber novidades e concordo com a{" "}
+          Aceito receber conteúdos sobre música e matemática e concordo com a{" "}
           <a
-            href="https://jazzautomations.zo.space/privacidade"
+            href="https://jazz-automations.vercel.app/privacidade"
             target="_blank"
-            className="underline hover:text-emerald-300"
+            rel="noopener noreferrer"
+            className="underline underline-offset-2 hover:text-[var(--color-fg)]"
           >
             política de privacidade
           </a>
@@ -140,25 +137,30 @@ export default function LeadForm() {
       </label>
 
       {status === "error" && (
-        <div className="flex items-start gap-2 rounded-lg bg-red-900/30 px-4 py-3 text-sm text-red-300">
-          <AlertCircle className="mt-0.5 size-4 shrink-0" />
-          <span>{errorMsg}</span>
-        </div>
+        <p className="text-sm text-red-400">{msg}</p>
       )}
 
       <button
         type="submit"
-        disabled={status === "loading"}
-        className="flex w-full items-center justify-center gap-2 rounded-lg bg-emerald-600 px-6 py-3.5 text-base font-semibold text-white transition hover:bg-emerald-500 disabled:cursor-not-allowed disabled:opacity-60"
+        disabled={status === "loading" || !nome.trim() || !email.trim() || !consentiu}
+        className="group relative w-full overflow-hidden rounded-lg bg-[var(--color-accent)] px-6 py-3.5 text-sm font-semibold uppercase tracking-wider text-[var(--color-bg)] transition-all duration-300 hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-40"
       >
-        {status === "loading" ? (
-          <>
-            <Loader2 className="size-5 animate-spin" /> Enviando…
-          </>
-        ) : (
-          "Quero baixar grátis →"
+        <span className={status === "loading" ? "opacity-0" : "opacity-100"}>
+          {status === "loading" ? "Enviando…" : "Baixar Grátis"}
+        </span>
+        {status === "loading" && (
+          <span className="absolute inset-0 flex items-center justify-center">
+            <svg className="size-5 animate-spin" viewBox="0 0 24 24" fill="none">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+            </svg>
+          </span>
         )}
       </button>
+
+      <p className="text-center text-xs text-[var(--color-muted)]">
+        Seus dados não serão compartilhados. Download 100% gratuito.
+      </p>
     </form>
   );
 }
