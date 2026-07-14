@@ -25,12 +25,11 @@ export default function LeadForm() {
       });
       const data = await res.json();
       if (data.ok && data.pdfs) {
-        setPdfUrl(data.pdfs[0]?.url || '/livro-musica-matematica.pdf');
-        setBonusUrl(data.pdfs[1]?.url || '/ouvir-para-criar.pdf');
+        setPdfUrl(data.pdfs[0]?.url || "/livro-musica-matematica.pdf");
+        setBonusUrl(data.pdfs[1]?.url || "/ouvir-para-criar.pdf");
         setDone(true);
       }
     } catch {
-      // Mesmo se falhar, liberar o download
       setPdfUrl("/livro-musica-matematica.pdf");
       setBonusUrl("/ouvir-para-criar.pdf");
       setDone(true);
@@ -39,75 +38,77 @@ export default function LeadForm() {
     }
   }
 
-  // Estado: download disponível
   if (done) {
     return (
       <div className="space-y-4">
-        <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-6 text-center">
-          <Check className="mx-auto mb-3 h-8 w-8 text-emerald-400" />
-          <p className="text-lg font-semibold text-emerald-300">Pronto! Seus livros estão aqui:</p>
-          <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:justify-center">
+        <div className="flex items-center justify-center gap-2 rounded border border-[color-mix(in_srgb,#4ade80,transparent_60%)] bg-[color-mix(in_srgb,#4ade80,transparent_92%)] px-4 py-3 text-[0.82rem] text-[#86efac]">
+          <Check className="size-4" />
+          Pronto! Seus livros estão prontos para download.
+        </div>
+
+        <div className="flex flex-col gap-3">
+          {pdfUrl && (
             <a
               href={pdfUrl}
               download
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-amber-500 px-6 py-3 font-semibold text-black transition-colors hover:bg-amber-400"
+              className="btn-primary justify-center"
             >
-              <Download className="h-5 w-5" />
-              Baixar: Música & Matemática
+              <Download className="size-4" />
+              Baixar: A Música e a Matemática da Natureza
             </a>
-            {bonusUrl && (
-              <a
-                href={bonusUrl}
-                download
-                className="inline-flex items-center justify-center gap-2 rounded-xl border border-amber-500/40 bg-amber-500/10 px-6 py-3 font-semibold text-amber-300 transition-colors hover:bg-amber-500/20"
-              >
-                <Download className="h-5 w-5" />
-                Bônus: Ouvir para Criar
-              </a>
-            )}
-          </div>
+          )}
+          {bonusUrl && (
+            <a
+              href={bonusUrl}
+              download
+              className="btn-secondary justify-center"
+            >
+              <Download className="size-4" />
+              Bônus: Ouvir para Criar
+            </a>
+          )}
         </div>
       </div>
     );
   }
 
-  // Estado: formulário
   return (
     <form onSubmit={handleSubmit} className="mx-auto max-w-md space-y-4">
       <div className="relative">
-        <User className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-white/30" />
+        <User className="pointer-events-none absolute left-4 top-1/2 size-5 -translate-y-1/2 text-[var(--muted)]" />
         <input
           type="text"
           placeholder="Seu nome"
           value={nome}
           onChange={(e) => setNome(e.target.value)}
           required
-          className="w-full rounded-xl border border-white/10 bg-white/5 py-3 pl-12 pr-4 text-white placeholder-white/40 outline-none transition-colors focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/30"
-        />
-      </div>
-      <div className="relative">
-        <Mail className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-white/30" />
-        <input
-          type="email"
-          placeholder="Seu email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          className="w-full rounded-xl border border-white/10 bg-white/5 py-3 pl-12 pr-4 text-white placeholder-white/40 outline-none transition-colors focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/30"
+          className="w-full rounded border border-[var(--border)] bg-[var(--bg-3)] py-3 pl-12 pr-4 text-[0.85rem] text-[var(--cream)] placeholder-[var(--muted)] outline-none transition-colors focus:border-[var(--gold-dim)] focus:ring-1 focus:ring-[var(--gold-dim)]"
         />
       </div>
 
-      <label className="flex cursor-pointer items-start gap-3 text-sm text-white/50">
+      <div className="relative">
+        <Mail className="pointer-events-none absolute left-4 top-1/2 size-5 -translate-y-1/2 text-[var(--muted)]" />
+        <input
+          type="email"
+          placeholder="Seu e-mail"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          className="w-full rounded border border-[var(--border)] bg-[var(--bg-3)] py-3 pl-12 pr-4 text-[0.85rem] text-[var(--cream)] placeholder-[var(--muted)] outline-none transition-colors focus:border-[var(--gold-dim)] focus:ring-1 focus:ring-[var(--gold-dim)]"
+        />
+      </div>
+
+      <label className="flex cursor-pointer items-start gap-3 text-[0.78rem] text-[var(--muted)]">
         <input
           type="checkbox"
           checked={lgpd}
           onChange={(e) => setLgpd(e.target.checked)}
           required
-          className="mt-0.5 h-4 w-4 rounded border-white/20 bg-white/5 accent-amber-500"
+          className="mt-0.5 size-4 rounded border-[var(--border)] bg-[var(--bg-3)] accent-[var(--gold)]"
         />
         <span>
           Concordo com a{" "}
-          <a href="/privacidade" className="underline decoration-white/30 hover:text-white/70">
+          <a href="/privacidade" className="underline decoration-[var(--muted)]/30 hover:text-[var(--cream-dim)]">
             Política de Privacidade
           </a>{" "}
           e autorizo o uso dos meus dados conforme a LGPD.
@@ -117,19 +118,19 @@ export default function LeadForm() {
       <button
         type="submit"
         disabled={!nome.trim() || !email.trim() || !lgpd || loading}
-        className="flex w-full items-center justify-center gap-2 rounded-xl bg-amber-500 py-3.5 font-semibold text-black transition-all hover:bg-amber-400 disabled:cursor-not-allowed disabled:opacity-40"
+        className="btn-primary w-full justify-center disabled:cursor-not-allowed disabled:opacity-40"
       >
         {loading ? (
-          <Loader2 className="h-5 w-5 animate-spin" />
+          <Loader2 className="size-5 animate-spin" />
         ) : (
           <>
-            <Download className="h-5 w-5" />
+            <Download className="size-4" />
             Baixar Grátis
           </>
         )}
       </button>
 
-      <p className="text-center text-xs text-white/30">
+      <p className="text-center font-[var(--font-jetbrains)] text-[0.6rem] tracking-[0.1em] uppercase text-[var(--muted)]">
         Sem spam. Apenas seus livros.
       </p>
     </form>
