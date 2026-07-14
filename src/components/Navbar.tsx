@@ -1,53 +1,78 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { Menu, X } from "lucide-react";
+import { useState } from "react";
+
+const LINKS = [
+  { label: "O Livro", href: "#livro" },
+  { label: "Autor", href: "#autor" },
+  { label: "Conteúdo", href: "#conteudo" },
+  { label: "FAQ", href: "#faq" },
+];
 
 export default function Navbar() {
-  const navRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const onScroll = () => {
-      if (!navRef.current) return;
-      navRef.current.classList.toggle("nav-scroll", window.scrollY > 60);
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  const [open, setOpen] = useState(false);
 
   return (
-    <nav
-      ref={navRef}
-      className="fixed inset-x-0 top-0 z-50 transition-all duration-300"
-    >
+    <nav className="nav-base">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 md:px-8">
         <a
           href="#"
-          className="font-[var(--font-cinzel)] text-xs font-semibold tracking-[0.2em] text-[var(--gold-2)] uppercase"
+          className="font-[var(--font-cinzel)] text-sm font-bold tracking-widest text-[var(--cream)] no-underline hover:text-[var(--gold-1)]"
         >
-          Felipe Salvego
+          FELIPE SALVEGO
         </a>
-        <div className="flex items-center gap-6">
-          {[
-            { href: "#livro", label: "O Livro" },
-            { href: "#autor", label: "Autor" },
-            { href: "#faq", label: "FAQ" },
-          ].map((link) => (
+
+        <div className="hidden items-center gap-8 md:flex">
+          {LINKS.map((l) => (
             <a
-              key={link.href}
-              href={link.href}
-              className="hidden font-[var(--font-jetbrains)] text-[0.65rem] font-medium uppercase tracking-[0.12em] text-[var(--cream-dim)] transition-colors hover:text-[var(--gold-2)] md:block"
+              key={l.href}
+              href={l.href}
+              className="nav-link"
             >
-              {link.label}
+              {l.label}
             </a>
           ))}
           <a
-            href="#comprar"
-            className="rounded-[2px] border border-[var(--gold)] px-4 py-1.5 font-[var(--font-jetbrains)] text-[0.6rem] font-semibold uppercase tracking-[0.12em] text-[var(--gold)] transition-all duration-300 hover:bg-[var(--gold)] hover:text-[var(--bg)]"
+            href="https://pay.kirvano.com/a38b98ce-82c2-4d00-9a96-ea59ce42b4bc"
+            target="_blank"
+            className="btn-primary text-xs"
           >
-            Comprar
+            Baixar Grátis
           </a>
         </div>
+
+        <button
+          className="relative z-50 text-[var(--cream)] md:hidden"
+          onClick={() => setOpen((v) => !v)}
+          aria-label="Menu"
+        >
+          {open ? <X size={22} /> : <Menu size={22} />}
+        </button>
       </div>
+
+      {open && (
+        <div className="fixed inset-0 z-40 flex flex-col items-center justify-center gap-8 bg-[var(--bg)] md:hidden">
+          {LINKS.map((l) => (
+            <a
+              key={l.href}
+              href={l.href}
+              className="text-lg tracking-widest text-[var(--cream)] no-underline"
+              onClick={() => setOpen(false)}
+            >
+              {l.label}
+            </a>
+          ))}
+          <a
+            href="https://pay.kirvano.com/a38b98ce-82c2-4d00-9a96-ea59ce42b4bc"
+            target="_blank"
+            className="btn-primary"
+            onClick={() => setOpen(false)}
+          >
+            Baixar Grátis
+          </a>
+        </div>
+      )}
     </nav>
   );
 }

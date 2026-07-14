@@ -29,7 +29,7 @@ export default function FinalCTA() {
   return (
     <section ref={ref} className="section">
       <div className="mx-auto max-w-3xl text-center">
-        <div className="eyebrow reveal">Garanta Seu Exemplar</div>
+        <div className="eyebrow reveal">Download Grátis</div>
         <h2 className="reveal mt-4 text-[clamp(1.5rem,3vw,2.5rem)] font-[var(--font-cinzel)] leading-[1.15] text-[var(--cream)]">
           A Música e a Matemática da Natureza
         </h2>
@@ -39,13 +39,16 @@ export default function FinalCTA() {
 
         <div className="reveal mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
           <a
-            href="#"
+            href="https://pay.kirvano.com/a38b98ce-82c2-4d00-9a96-ea59ce42b4bc"
+            target="_blank"
             className="btn-primary"
           >
             <Download className="size-4" />
-            Comprar Agora — R$ 47
+            Baixar Grátis
           </a>
-          <p className="text-xs text-[var(--muted)]">PDF • 54 páginas • Acesso vitalício</p>
+          <p className="px-4 text-xs leading-relaxed text-[var(--muted)]">
+            PDF • 54 páginas • Acesso vitalício
+          </p>
         </div>
       </div>
     </section>

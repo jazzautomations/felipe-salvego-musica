@@ -20,10 +20,9 @@ export default function Hero() {
 
   return (
     <section className="hero-section">
-      {/* parallax background layer */}
       <div ref={bgRef} className="hero-bg-layer [mask-image:radial-gradient(ellipse_80%_70%_at_50%_50%,black,transparent)]">
         <Image
-          src="/assets/hero-poster.png"
+          src="/images/hero-poster.png"
           alt=""
           fill
           className="object-cover"
@@ -64,8 +63,8 @@ export default function Hero() {
             mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
           }`}
         >
-          <a href="#comprar" className="btn-primary">
-            Comprar por R$ 47
+          <a href="https://pay.kirvano.com/a38b98ce-82c2-4d00-9a96-ea59ce42b4bc" target="_blank" className="btn-primary">
+            Baixar Grátis
           </a>
           <a href="#livro" className="btn-secondary">
             Saber mais
