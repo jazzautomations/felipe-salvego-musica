@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# A Música e a Matemática da Natureza
 
-## Getting Started
+Landing page para o e-book gratuito de Felipe Salvego — Série Fundamentos da Música, Volume I.
 
-First, run the development server:
+## Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Next.js 16** (App Router + Turbopack)
+- **React 19**
+- **Tailwind CSS 4**
+- **TypeScript**
+- **Lucide React** (ícones)
+
+## Deploy na Vercel
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/jazzautomations/felipe-salvego-musica)
+
+Ou manualmente:
+
+1. Acesse [vercel.com/new](https://vercel.com/new)
+2. Importe o repo `jazzautomations/felipe-salvego-musica`
+3. Framework: **Next.js** (detectado automaticamente)
+4. Deploy
+
+## Estrutura
+
+```
+src/
+├── app/
+│   ├── layout.tsx        # Layout global + fontes
+│   ├── page.tsx          # Página principal
+│   └── globals.css       # Tokens CSS + estilos base
+└── components/
+    ├── Navbar.tsx         # Header sticky
+    ├── Hero.tsx           # Hero + waveform animada
+    ├── Waveform.tsx       # Animação SVG das barras
+    ├── Hook.tsx           # Seção problema + roda cromática
+    ├── ChromaticWheel.tsx # Roda interativa 12 semitons
+    ├── Topics.tsx         # Grid 9 capítulos
+    ├── Timeline.tsx       # Linha do tempo 4000 anos
+    ├── Structure.tsx      # Índice + capas do livro
+    ├── QuoteSection.tsx   # Citação Sylvester
+    ├── FAQ.tsx            # Perguntas frequentes
+    ├── FinalCTA.tsx       # CTA final de download
+    ├── RevealOnScroll.tsx # Animação de entrada
+    └── Footer.tsx         # Footer
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Imagens
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `public/images/hero-poster.png` — Poster promocional
+- `public/images/book-covers.png` — Capa frente e verso
+- `public/images/felipe-guitar.jpg` — Felipe Salvego tocando
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Local Development
 
-## Learn More
+```bash
+npm install
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Acesse [http://localhost:3000](http://localhost:3000).
