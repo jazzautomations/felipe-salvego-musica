@@ -53,7 +53,7 @@ export default function FinalCTA() {
           <div className="rounded-xl border border-stone-700/60 bg-stone-800/40 p-6 backdrop-blur-sm md:p-8">
             <div className="mb-6 flex items-center justify-center gap-3 text-stone-400">
               <BookOpen className="size-5" />
-              <span className="text-sm">PDF • 150+ páginas • Acesso vitalício</span>
+              <span className="text-sm">PDF • 150+ páginas • Grátis</span>
             </div>
             <LeadForm />
           </div>
