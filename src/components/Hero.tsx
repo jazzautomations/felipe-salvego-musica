@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import Image from "next/image";
+import { useEffect, useRef } from "react";
 
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -9,62 +9,65 @@ export default function Hero() {
   useEffect(() => {
     const el = sectionRef.current;
     if (!el) return;
-    const revealEls = el.querySelectorAll(".reveal");
-    const observer = new IntersectionObserver(
+    const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add("revealed");
-            observer.unobserve(entry.target);
+            entry.target.classList.add("in-view");
+            io.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.15 }
+      { threshold: 0.1 }
     );
-    revealEls.forEach((r) => observer.observe(r));
-    return () => observer.disconnect();
+    el.querySelectorAll(".reveal").forEach((r) => io.observe(r));
+    return () => io.disconnect();
   }, []);
 
   return (
-    <section
-      ref={sectionRef}
-      className="relative flex min-h-dvh items-center justify-center overflow-hidden bg-stone-950 pt-16"
-    >
-      {/* Grain overlay */}
-      <div className="pointer-events-none absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJmIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc0IiBudW1PY3RhdmVzPSI0IiAvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCNmKSIgb3BhY2l0eT0iLjA0IiAvPjwvc3ZnPg==')] opacity-30" />
+    <section ref={sectionRef} className="hero-section" id="topo">
+      {/* Background layer */}
+      <div className="hero-bg-layer">
+        <Image
+          src="/hero-poster.png"
+          alt=""
+          fill
+          className="object-cover"
+          priority
+          sizes="100vw"
+        />
+      </div>
+      <div className="hero-overlay" />
+      <div className="hero-glow" />
 
-      <div className="relative z-10 mx-auto grid w-full max-w-6xl items-center gap-8 px-4 md:grid-cols-2 md:gap-12 md:px-6">
-        {/* Texto */}
+      <div className="relative z-10 mx-auto grid w-full max-w-6xl items-center gap-10 px-5 md:grid-cols-2 md:gap-14 md:px-8">
+        {/* Text */}
         <div className="text-center md:text-left">
-          <span className="reveal mb-4 inline-block rounded-full border border-emerald-700/30 bg-emerald-900/15 px-3.5 py-1 text-xs font-medium tracking-widest uppercase text-emerald-400">
-            Série Fundamentos da Música • Vol. I
+          <span className="reveal mb-4 inline-block rounded-full border border-[color-mix(in_srgb,var(--gold),transparent_70%)] bg-[color-mix(in_srgb,var(--gold),transparent_92%)] px-3.5 py-1 text-[0.6rem] font-medium tracking-[0.2em] uppercase text-[var(--gold)]">
+            Série Fundamentos da Música · Vol. I
           </span>
 
-          <h1 className="reveal mt-4 text-[clamp(2rem,6vw,3.5rem)] font-light leading-[1.08] tracking-tight text-stone-100">
+          <h1 className="reveal mt-4 font-[var(--font-cinzel)] text-[clamp(1.75rem,5.5vw,3.2rem)] font-bold leading-[1.1] tracking-tight text-[var(--cream)]">
             A Música e a{" "}
-            <span className="font-semibold italic text-emerald-400">Matemática da Natureza</span>
+            <span className="text-[var(--gold-2)]">
+              Matemática da Natureza
+            </span>
           </h1>
 
-          <p className="reveal mt-5 text-base leading-relaxed text-stone-400 md:text-lg">
-            Física • Matemática • História • Cultura — das origens antigas ao temperamento
-            igual, a jornada dos intervalos que organizam o som.
+          <p className="reveal mx-auto mt-5 max-w-md text-[clamp(0.85rem,1.5vw,1rem)] leading-relaxed text-[var(--cream-dim)] md:mx-0">
+            Física · Matemática · História · Cultura — das origens antigas ao
+            temperamento igual, a jornada dos intervalos que organizam o som.
           </p>
 
-          <p className="reveal mt-2 text-sm italic text-stone-500">
+          <p className="reveal mt-2 text-[0.75rem] italic text-[var(--muted)]">
             Felipe Salvego
           </p>
 
           <div className="reveal mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-start">
-            <a
-              href="#baixar"
-              className="inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-emerald-500"
-            >
+            <a href="#baixar" className="btn-primary">
               Baixar grátis
             </a>
-            <a
-              href="#livro"
-              className="inline-flex items-center gap-2 rounded-lg border border-stone-700 px-6 py-3.5 text-sm font-medium text-stone-300 transition hover:border-stone-500 hover:text-stone-100"
-            >
+            <a href="#livro" className="btn-secondary">
               Sobre o livro
             </a>
           </div>
@@ -72,18 +75,23 @@ export default function Hero() {
 
         {/* Poster */}
         <div className="reveal flex justify-center">
-          <div className="relative w-full max-w-sm">
-            <div className="absolute -inset-1 rounded-2xl bg-gradient-to-b from-emerald-500/20 to-stone-700/20 opacity-60 blur-xl" />
+          <div className="relative w-full max-w-[280px] sm:max-w-xs md:max-w-sm">
             <Image
               src="/hero-poster.png"
-              alt="A Música e a Matemática da Natureza — Felipe Salvego"
-              className="relative rounded-xl border border-stone-700/60 object-cover shadow-2xl"
+              alt="Capa — A Música e a Matemática da Natureza"
+              className="relative rounded-sm border border-[color-mix(in_srgb,var(--gold),transparent_85%)] object-cover shadow-[0_24px_80px_-16px_rgba(0,0,0,0.7)]"
               priority
               width={500}
               height={700}
             />
           </div>
         </div>
+      </div>
+
+      {/* Scroll indicator */}
+      <div className="scroll-indicator">
+        <span>Scroll</span>
+        <div className="scroll-line" />
       </div>
     </section>
   );

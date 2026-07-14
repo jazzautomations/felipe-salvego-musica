@@ -29,7 +29,7 @@ const FAQS = [
   },
   {
     q: "Onde baixar o livro?",
-    a: "O livro é 100% gratuito. Clique no botão no final da página — sem cadastro, sem e-mail, só o PDF.",
+    a: "O livro é 100% gratuito. Preencha o formulário no final da página com nome e e-mail — o PDF é baixado na hora.",
   },
 ];
 
