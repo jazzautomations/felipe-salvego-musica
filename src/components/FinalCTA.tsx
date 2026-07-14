@@ -2,27 +2,32 @@ import { Download } from "lucide-react";
 
 export default function FinalCTA() {
   return (
-    <section className="relative z-[1] px-8 py-[110px] text-center" id="download">
-      <div className="mx-auto max-w-[1180px]">
-        <p className="eyebrow mb-4 justify-center">
-          Volume I · Fundamentos da Música
-        </p>
-        <h2 className="mx-auto mb-5 max-w-[700px] font-[var(--font-cinzel)] text-[clamp(1.8rem,3.4vw,2.6rem)] font-medium leading-[1.15] tracking-[0.02em] text-[var(--gold-2)]">
-          Comece pelo problema que Pitágoras não conseguiu resolver.
+    <section className="relative z-[1] px-6 py-28 md:px-12">
+      <div className="mx-auto max-w-3xl text-center">
+        <span className="font-mono text-[0.7rem] font-medium uppercase tracking-[0.2em] text-[var(--gold)]">
+          Série Fundamentos da Música • Volume I
+        </span>
+        <h2 className="mt-4 text-balance text-3xl font-light leading-[1.2] tracking-[-0.01em] text-[var(--fg)] md:text-5xl">
+          A música é matemática que se ouve.
+          <br />
+          <span className="text-[var(--gold)]">A matemática é música que se pensa.</span>
         </h2>
-        <p className="mx-auto mb-9 max-w-[50ch] text-[1.12rem] text-[var(--cream-dim)]">
-          Download gratuito, direto no seu e-mail. Sem cartão, sem pegadinha.
+        <p className="mx-auto mt-6 max-w-xl text-[0.88rem] leading-relaxed text-[var(--muted)]">
+          PDF interativo com links, diagramas, notações e faixas de áudio explicativas.
+          <br />
+          Leia no computador, tablet ou celular.
         </p>
+
         <a
-          href="https://pay.kirvano.com/checkout/seu-produto"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="btn-primary"
+          href="#"
+          className="mt-10 inline-flex items-center gap-3 rounded-sm border border-[var(--gold)] bg-[var(--gold)] px-8 py-4 text-sm font-medium uppercase tracking-[0.12em] text-[var(--bg)] transition-all duration-300 hover:bg-transparent hover:text-[var(--gold)]"
         >
-          Baixar o e-book grátis
-          <Download size={16} />
+          <Download className="size-4" />
+          Comprar — R$ 47
         </a>
-        <p className="cta-note">PDF · 51 páginas · entrega imediata</p>
+        <p className="mt-4 font-mono text-[0.65rem] uppercase tracking-[0.1em] text-[var(--muted-2)]">
+          PDF • 54 páginas • entrega imediata
+        </p>
       </div>
     </section>
   );

@@ -15,9 +15,9 @@ const cinzel = Cinzel({
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
+  weight: ["400", "600"],
   variable: "--font-cormorant",
   display: "swap",
-  style: ["normal", "italic"],
 });
 
 const lora = Lora({
@@ -34,16 +34,23 @@ const jetbrains = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title:
-    "A Música e a Matemática da Natureza — E-book Gratuito · Felipe Salvego",
+    "A Música e a Matemática da Natureza | Felipe Salvego",
   description:
-    "Um livro sobre a física do som, a matemática das proporções e a história da música — dos sumérios ao temperamento igual. Download gratuito.",
+    "Das origens antigas ao temperamento ocidental — a física do som que moldou a música ocidental, o blues e os sistemas modais do mundo árabe, turco e indiano. Série Fundamentos da Música • Volume I.",
+  openGraph: {
+    title: "A Música e a Matemática da Natureza",
+    description:
+      "A física do som que moldou a música ocidental, o blues e os sistemas modais do mundo árabe, turco e indiano.",
+    type: "book",
+    locale: "pt_BR",
+  },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="pt-BR">
       <body

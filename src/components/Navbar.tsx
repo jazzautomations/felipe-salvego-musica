@@ -1,20 +1,57 @@
 "use client";
 
+import { useEffect, useRef } from "react";
+
+const NAV_LINKS = [
+  { label: "O livro", href: "#livro" },
+  { label: "Conteúdo", href: "#conteudo" },
+  { label: "Autor", href: "#autor" },
+];
+
 export default function Navbar() {
+  const navRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const onScroll = () => {
+      if (!navRef.current) return;
+      navRef.current.classList.toggle("nav-scroll", window.scrollY > 80);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <header className="sticky top-0 z-50 border-b border-[var(--line)] bg-[rgba(10,8,6,0.86)] backdrop-blur-[10px]">
-      <nav className="mx-auto flex max-w-[1180px] items-center justify-between px-8 py-4">
-        <a href="#" className="font-[var(--font-cinzel)] text-[0.95rem] tracking-[0.14em] uppercase text-[var(--cream)] no-underline">
-          Fundamentos <span className="text-[var(--gold)]">da Música</span>
-          <span className="hidden sm:inline"> · Vol. I</span>
-        </a>
+    <nav
+      ref={navRef}
+      className="fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out"
+    >
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <a
-          href="#download"
-          className="whitespace-nowrap rounded-[2px] bg-[var(--gold-2)] px-5 py-2.5 font-[var(--font-jetbrains)] text-[0.78rem] uppercase tracking-[0.05em] text-[var(--bg)] no-underline transition-all duration-200 hover:-translate-y-[1px] hover:bg-[var(--cream)]"
+          href="#"
+          className="font-[var(--font-cinzel)] text-[0.85rem] tracking-[0.1em] text-[var(--gold-2)] no-underline"
         >
-          Baixar grátis
+          FELIPE SALVEGO
         </a>
-      </nav>
-    </header>
+
+        <div className="hidden items-center gap-8 sm:flex">
+          {NAV_LINKS.map((l) => (
+            <a
+              key={l.href}
+              href={l.href}
+              className="font-[var(--font-jetbrains)] text-[0.72rem] tracking-[0.14em] uppercase text-[var(--cream-dim)] no-underline transition-colors duration-200 hover:text-[var(--gold-2)]"
+            >
+              {l.label}
+            </a>
+          ))}
+        </div>
+
+        <a
+          href="#cta"
+          className="rounded-[2px] border border-[var(--gold-dim)] px-4 py-[7px] font-[var(--font-jetbrains)] text-[0.7rem] uppercase tracking-[0.12em] text-[var(--gold-2)] no-underline transition-all duration-300 hover:bg-[var(--gold-2)] hover:text-[var(--bg)]"
+        >
+          Download
+        </a>
+      </div>
+    </nav>
   );
 }
