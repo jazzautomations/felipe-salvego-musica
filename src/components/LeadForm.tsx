@@ -24,9 +24,9 @@ export default function LeadForm() {
         body: JSON.stringify({ nome: nome.trim(), email: email.trim() }),
       });
       const data = await res.json();
-      if (data.ok) {
-        setPdfUrl(data.pdfUrl);
-        setBonusUrl(data.bonusUrl);
+      if (data.ok && data.pdfs) {
+        setPdfUrl(data.pdfs[0]?.url || '/livro-musica-matematica.pdf');
+        setBonusUrl(data.pdfs[1]?.url || '/ouvir-para-criar.pdf');
         setDone(true);
       }
     } catch {
