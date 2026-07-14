@@ -1,11 +1,10 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import AboutBook from "@/components/AboutBook";
-import Topics from "@/components/Topics";
-import Timeline from "@/components/Timeline";
-import Author from "@/components/Author";
 import WhyRead from "@/components/WhyRead";
 import QuoteSection from "@/components/QuoteSection";
+import Timeline from "@/components/Timeline";
+import Author from "@/components/Author";
 import FAQ from "@/components/FAQ";
 import FinalCTA from "@/components/FinalCTA";
 import Footer from "@/components/Footer";
@@ -19,11 +18,10 @@ export default function Home() {
       <main>
         <Hero />
         <AboutBook />
-        <Topics />
+        <WhyRead />
         <QuoteSection />
         <Timeline />
         <Author />
-        <WhyRead />
         <FAQ />
         <FinalCTA />
       </main>

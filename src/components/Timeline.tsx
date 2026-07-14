@@ -1,49 +1,68 @@
 "use client";
 
-const TIMELINE = [
-  { year: "~2000 a.C.", title: "Sumérios", desc: "Primeiros registros de notação musical em tabletes de argila. A música como fenômeno matemático começa a ser documentada." },
-  { year: "~550 a.C.", title: "Pitágoras", desc: "Descobre as relações numéricas entre intervalos musicais usando o monocórdio. Nasce a teoria musical como matemática." },
-  { year: "~350 a.C.", title: "Aristóxeno", desc: "Discípulo de Aristóteles propõe uma abordagem perceptual da música, rivalizando com a visão puramente matemática de Pitágoras." },
-  { year: "~850 d.C.", title: "Música Enchiriadis", desc: "Primeiros tratados de música polifônica ocidental. O organum paralelo documenta a harmonia como fenômeno físico." },
-  { year: "~1026", title: "Guido d'Arezzo", desc: "Inventa a pauta musical e o sistema hexacordal. Nomes das notas (Ut, Re, Mi, Fa, Sol, La) baseados no hino a São João Batista." },
-  { year: "~1300", title: "Ars Nova", desc: "Surgimento da notação rítmica precisa. Philippe de Vitry formaliza o compasso e a proporção na música." },
-  { year: "1596", title: "Zarlino & a Série Harmônica", desc: "Gioseffo Zarlino publica as relações da série harmônica como fundamento da consonância musical." },
-  { year: "1691", title: "Werckmeister", desc: "Andreas Werckmeister publica seus sistemas de temperamento, uma solução prática para o comma pitagórico." },
-  { year: "1722", title: "Bach — O Cravo Bem Temperado", desc: "Bach demonstra na prática que o temperamento igual funciona em todos os tons. Marco zero da música ocidental moderna." },
-  { year: "1885", title: "Padrão A4=440Hz", desc: "Conferência Internacional define o Lá central como 440 Hz. A afinação se uniformiza globalmente." },
-  { year: "Séc. XX", title: "Blues & Microtonalidade", desc: "O blues revela as blue notes — intervalos que não cabem na grade de 12 semitons. Música árabe, turca e indiana usam sistemas microtonais vivos." },
+import { useEffect, useRef } from "react";
+
+const ITEMS = [
+  { year: "~500 a.C.", event: "Pitágoras descobre que cordas vibrantes produzem razões simples — nasce a relação entre números e sons." },
+  { year: "~350 a.C.", event: "Aristóxeno de Tarento sistematiza a teoria musical grega e critica a abordagem puramente matemática de Pitágoras." },
+  { year: "Séc. I d.C.", event: "Ptolomeu escreve Harmônica, refinando os intervalos consonantes e propondo o tetracorde dítônico." },
+  { year: "~1026", event: "Guido d'Arezzo inventa a pauta musical e nomeia as notas (Ut, Re, Mi, Fa, Sol, La), organizando o canto gregoriano." },
+  { year: "~1300", event: "Philippe de Vitry escreve Ars Nova, formalizando a notação rítmica e a síncope na música polifônica." },
+  { year: "~1490", event: "Franchino Gaffurio publica Theorica Musicae, conectando a música renascentista à tradição pitagórica." },
+  { year: "~1585", event: "Vincenzo Galilei (pai de Galileu) questiona o sistema pitagórico, abrindo caminho para novos temperamentos." },
+  { year: "~1636", event: "Marin Mersenne publica Harmonie Universelle, descrevendo leis da corda vibrante e frequências." },
+  { year: "~1691", event: "Andreas Werckmeister sistematiza o temperamento igual de 12 sons (12-TET), viabilizando a música tonal moderna." },
+  { year: "~1722", event: "Bach compõe O Cravo Bem-Temperado, demonstrando na prática a viabilidade do sistema 12-TET." },
+  { year: "~1860", event: "Hermann von Helmholtz publica O Sentido dos Tons, unificando acústica, fisiologia auditiva e teoria musical." },
+  { year: "Atual", event: "O microtonalismo e a música eletrônica expandem os limites do 12-TET, explorando divisões mais finas da oitava." },
 ];
 
 export default function Timeline() {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.querySelectorAll(".reveal").forEach((child, i) => {
+              (child as HTMLElement).style.setProperty("--i", String(i));
+              child.classList.add("in-view");
+            });
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.05 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   return (
-    <section id="timeline" className="relative z-[1] px-6 py-28 md:px-12">
+    <section className="section overflow-hidden" ref={ref}>
       <div className="mx-auto max-w-6xl">
-        <div className="relative flex flex-col gap-0">
-          {TIMELINE.map((item, i) => (
-            <div
+        <div className="eyebrow reveal">Linha do Tempo</div>
+
+        {/* horizontal scroll on desktop, vertical stack on mobile */}
+        <div className="timeline-line reveal" />
+
+        <div className="mt-8 flex snap-x snap-mandatory gap-6 overflow-x-auto pb-6 max-md:flex-col max-md:gap-0 max-md:overflow-visible max-md:pb-0">
+          {ITEMS.map((item, i) => (
+            <article
               key={i}
-              className="group relative flex items-start gap-6 md:gap-10"
+              className="timeline-card reveal snap-start shrink-0 max-md:shrink md:w-[280px]"
             >
-              {/* Line + dot */}
-              <div className="flex shrink-0 flex-col items-center">
-                <div className="z-10 size-3 rounded-full border-2 border-[var(--gold)] bg-[var(--bg)] transition-all duration-500 group-hover:scale-150 group-hover:bg-[var(--gold)]" />
-                {i < TIMELINE.length - 1 && (
-                  <div className="mt-0 h-full w-px bg-gradient-to-b from-[var(--gold)] to-[var(--gold)] opacity-20" />
-                )}
-              </div>
-              {/* Content */}
-              <div className="pb-14 pt-0 md:pb-20">
-                <span className="font-mono text-[0.7rem] font-medium uppercase tracking-[0.15em] text-[var(--gold)]">
-                  {item.year}
-                </span>
-                <h3 className="mt-1 text-base font-semibold leading-snug tracking-[0.01em] text-[var(--fg)] md:text-lg">
-                  {item.title}
-                </h3>
-                <p className="mt-1.5 max-w-lg text-[0.82rem] leading-relaxed text-[var(--muted)]">
-                  {item.desc}
-                </p>
-              </div>
-            </div>
+              <span className="timeline-dot" />
+              <span className="font-[var(--font-cinzel)] text-xs tracking-[0.15em] text-[var(--gold)]">
+                {item.year}
+              </span>
+              <p className="mt-2 text-sm leading-[1.5] text-[var(--cream-dim)]">
+                {item.event}
+              </p>
+            </article>
           ))}
         </div>
       </div>

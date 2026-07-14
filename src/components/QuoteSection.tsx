@@ -1,21 +1,41 @@
-export default function QuoteSection() {
-  return (
-    <section className="relative z-[1] px-6 py-28 md:px-12">
-      {/* decorative */}
-      <div className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-[0.015]">
-        <span className="select-none text-[clamp(8rem,20vw,16rem)] font-bold leading-none text-[var(--gold)]">
-          &ldquo;
-        </span>
-      </div>
+"use client";
 
+import { useEffect, useRef } from "react";
+
+export default function QuoteSection() {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.querySelectorAll(".reveal").forEach((child) => {
+              child.classList.add("in-view");
+            });
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  return (
+    <section ref={ref} className="section">
       <div className="mx-auto max-w-4xl text-center">
-        <blockquote className="text-balance text-2xl font-light leading-[1.4] tracking-[-0.01em] text-[var(--fg)] md:text-3xl">
-          &ldquo;A música é a matemática que pode ser ouvida e a matemática é a música que pode ser
-          pensada.&rdquo;
-        </blockquote>
-        <cite className="mt-6 block font-mono text-[0.75rem] not-italic uppercase tracking-[0.15em] text-[var(--muted)]">
-          James Joseph Sylvester — Matemático, 1814–1897
-        </cite>
+        <div className="reveal text-[clamp(1.25rem,2.5vw,2rem)] font-light leading-[1.6] tracking-wide text-[var(--cream)]">
+          <span className="text-[var(--gold)]">&ldquo;</span>A Música é a matemática
+          que pode ser ouvida, e a Matemática é a música que pode ser pensada.
+          <span className="text-[var(--gold)]">&rdquo;</span>
+        </div>
+        <p className="reveal mt-6 text-xs tracking-[0.15em] text-[var(--muted)]">
+          — James Joseph Sylvester, matemático (1814–1897)
+        </p>
       </div>
     </section>
   );

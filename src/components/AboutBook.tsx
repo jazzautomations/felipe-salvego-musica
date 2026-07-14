@@ -1,74 +1,100 @@
+"use client";
+
+import { useEffect, useRef } from "react";
 import Image from "next/image";
 
 export default function AboutBook() {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.querySelectorAll(".reveal").forEach((child, i) => {
+              (child as HTMLElement).style.setProperty("--i", String(i));
+              child.classList.add("in-view");
+            });
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   return (
-    <section
-      id="livro"
-      className="relative z-[1] border-t border-[var(--bg-3)] bg-[var(--bg)] py-28"
-    >
-      <div className="mx-auto max-w-6xl px-6">
-        <div className="grid items-center gap-16 md:grid-cols-2">
-          {/* Image */}
-          <div className="reveal">
-            <div className="group relative">
-              <div className="absolute -inset-3 rounded-sm bg-gradient-to-br from-[var(--gold-dim)]/10 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+    <section id="livro" className="section" ref={ref}>
+      <div className="mx-auto max-w-6xl">
+        <div className="eyebrow reveal">O Livro</div>
+
+        <div className="mt-8 grid items-start gap-10 md:grid-cols-5 md:gap-16">
+          {/* book cover image */}
+          <div className="book-card reveal md:col-span-2">
+            <div className="offset-frame">
               <Image
                 src="/images/book-covers.png"
-                alt="A Música e a Matemática da Natureza — Felipe Salvego"
-                width={2400}
-                height={1600}
-                className="relative w-full rounded-sm object-contain shadow-2xl"
+                alt="A Música e a Matemática da Natureza — capa e contracapa"
+                width={800}
+                height={600}
+                className="h-auto w-full rounded-[2px]"
                 priority
+                sizes="(max-width: 768px) 100vw, 40vw"
               />
             </div>
           </div>
 
-          {/* Text */}
-          <div className="reveal">
-            <span className="font-[var(--font-jetbrains)] text-[0.65rem] uppercase tracking-[0.16em] text-[var(--gold-2)]">
-              Sobre o Livro
-            </span>
-            <h2 className="mt-4 font-[var(--font-cinzel)] text-[clamp(1.6rem,3.5vw,2.6rem)] font-normal leading-[1.1] tracking-[-0.01em] text-[var(--cream)]">
-              Música, Matemática <br />e Som
+          {/* description */}
+          <div className="reveal md:col-span-3">
+            <h2 className="font-[var(--font-cinzel)] text-[clamp(1.4rem,3.5vw,2rem)] font-bold leading-[1.2] text-[var(--gold-2)]">
+              A Música e a Matemática da Natureza
             </h2>
+            <p className="mt-2 font-[var(--font-jetbrains)] text-[0.7rem] uppercase tracking-[0.12em] text-[var(--muted)]">
+              Felipe Salvego — Série Fundamentos da Música • Volume I
+            </p>
 
-            <div className="mt-6 space-y-4 font-[var(--font-cormorant)] text-[1.1rem] leading-[1.7] text-[var(--cream-dim)]">
+            <div className="mt-6 space-y-4 text-[clamp(0.82rem,1.5vw,0.92rem)] leading-[1.7] text-[var(--cream-dim)]">
               <p>
-                Por que uma oitava tem 12 notas? O que faz um acorde soar
-                &ldquo;certo&rdquo; ou &ldquo;errado&rdquo;? Como Pitágoras
-                descobriu a matemática da música milênios antes do primeiro
-        tratado de teoria musical?
+                Por que uma oitava tem 12 notas? De onde vêm os intervalos
+                musicais? O que Pitágoras tem a ver com a Série Harmônica?
+                <strong className="text-[var(--cream)]">
+                  {" "}Este livro responde a essas perguntas{" "}
+                </strong>
+                conectando a prática musical à matemática e à física que a
+                sustentam.
               </p>
               <p>
-                Este livro é o Volume I da série <em>Fundamentos da Música</em>
-                , um mergulho na interseção entre a física do som, a
-                matemática das proporções e a história dos sistemas musicais
-                ao redor do mundo — do monocórdio de Pitágoras ao blues de
-                Robert Johnson, dos maqams árabes às ragas indianas.
+                A jornada começa na descoberta de Pitágoras — a primeira
+                pessoa a provar que os sons têm forma — e avança pela
+                história da afinação: dos monacórdios medievais ao
+                temperamento igual de 12 tons (12-TET), passando pelos
+                problemas não resolvidos que atormentaram músicos durante
+                séculos.
               </p>
               <p>
-                Sem pré-requisitos além da curiosidade. Em 3 a 4 horas de
-                leitura, você entende por que a música ocidental soa como soa
-                — e por que o comma pitagórico, aquela fração de 23,46 cents,
-                é o segredo mais bem guardado da harmonia.
+                Você vai entender por que{" "}
+                <strong className="text-[var(--cream)]">
+                  o comma pitagórico atormentou a música ocidental
+                </strong>
+                , como o sistema de 12 tons se consolidou, e onde o
+                microtonalismo e a música contemporânea expandem os limites
+                do que ouvimos.
               </p>
             </div>
 
-            <div className="mt-8 flex flex-wrap gap-6">
-              {[
-                { label: "Duração", value: "3–4h de leitura" },
-                { label: "Partes", value: "8 + 4 Apêndices" },
-                { label: "Nível", value: "Todos · sem pré-requisitos" },
-              ].map((i) => (
-                <div key={i.label}>
-                  <p className="font-[var(--font-jetbrains)] text-[0.6rem] uppercase tracking-[0.16em] text-[var(--muted)]">
-                    {i.label}
-                  </p>
-                  <p className="mt-1 font-[var(--font-cinzel)] text-[0.9rem] text-[var(--cream)]">
-                    {i.value}
-                  </p>
-                </div>
-              ))}
+            <div className="mt-6 flex flex-wrap gap-2">
+              <span className="tag-pill">Física Acústica</span>
+              <span className="tag-pill">Intervalos Musicais</span>
+              <span className="tag-pill">12-TET</span>
+              <span className="tag-pill">Comma Pitagórico</span>
+              <span className="tag-pill">Série Harmônica</span>
+              <span className="tag-pill">Microtonalidade</span>
+              <span className="tag-pill">História da Música</span>
+              <span className="tag-pill">Sistema de Afinação</span>
             </div>
           </div>
         </div>

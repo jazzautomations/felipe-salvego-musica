@@ -1,72 +1,76 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import Image from "next/image";
 
 export default function Author() {
-  return (
-    <section id="autor" className="relative z-[1] overflow-hidden px-6 py-28 md:px-12">
-      {/* Parallax bg layer */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[var(--gold)]/[0.02] via-transparent to-transparent" />
+  const ref = useRef<HTMLDivElement>(null);
 
-      <div className="mx-auto grid max-w-6xl items-center gap-10 md:grid-cols-2 md:gap-16">
-        {/* Image */}
-        <div className="relative aspect-[4/5] w-full overflow-hidden rounded-sm">
-          <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg)] via-transparent to-transparent z-10" />
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.querySelectorAll(".reveal").forEach((child, i) => {
+              (child as HTMLElement).style.setProperty("--i", String(i));
+              child.classList.add("in-view");
+            });
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  return (
+    <section ref={ref} className="section">
+      <div className="mx-auto flex max-w-5xl flex-col-reverse items-center gap-8 md:flex-row md:gap-16">
+        <div className="reveal w-full max-w-sm md:w-1/3">
           <Image
             src="/images/felipe-guitar.jpg"
             alt="Felipe Salvego"
-            fill
-            className="object-cover object-center grayscale transition-all duration-700 group-hover:grayscale-0"
-            sizes="(max-width: 768px) 100vw, 50vw"
-            priority
+            width={520}
+            height={694}
+            className="w-full rounded-lg object-cover opacity-90 shadow-2xl"
           />
-          {/* Decorative border */}
-          <div className="absolute -bottom-3 -right-3 left-3 top-3 -z-10 rounded-sm border border-[var(--gold)] opacity-30" />
         </div>
 
-        {/* Bio */}
-        <div className="space-y-5">
-          <span className="font-mono text-[0.7rem] font-medium uppercase tracking-[0.2em] text-[var(--gold)]">
-            Sobre o autor
-          </span>
-          <h2 className="text-3xl font-light leading-[1.15] tracking-[-0.01em] text-[var(--fg)] md:text-4xl">
-            Felipe <span className="font-semibold text-[var(--gold)]">Salvego</span>
-          </h2>
+        <div className="w-full md:w-2/3">
+          <div className="eyebrow reveal">Sobre o Autor</div>
 
-          <div className="space-y-4 text-[0.88rem] leading-relaxed text-[var(--muted)]">
+          <div className="reveal mt-6 space-y-4 text-sm leading-[1.7] text-[var(--cream-dim)]">
             <p>
-              Músico multi-instrumentista, guitarrista e produtor fonográfico. Nascido em 1998 em
-              São Paulo — mas com alma musical nascida muito antes, aos 12 anos, quando subiu num
-              palco pela primeira vez e nunca mais saiu.
+              <strong className="font-[var(--font-cinzel)] text-[var(--cream)]">
+                Felipe Salvego
+              </strong>{" "}
+              é músico multi-instrumentista, compositor e professor. Formado em Música pela
+              Universidade de São Paulo, dedica-se há mais de 15 anos a investigar e traduzir
+              as conexões entre som, ciência e cultura.
             </p>
             <p>
-              Formado em Guitarra — Jazz & MPB e Produção Fonográfica, construiu uma trajetória que
-              transita com naturalidade entre palcos, estúdios e salas de aula. Já dividiu o palco
-              com a irmã, a cantora Bebé Salvego, em shows pelo Brasil, e trabalhou como músico
-              acompanhador, arranjador, produtor e professor.
+              Guitarrista de jazz e MPB, já dividiu o palco com músicos de destaque no circuito
+              independente brasileiro e acumula experiência em estúdio como produtor e arranjador.
+              Sua prática musical está profundamente enraizada na escuta analítica do fenômeno sonoro
+              — o que o levou naturalmente ao estudo da acústica e da história dos sistemas de afinação.
             </p>
             <p>
-              Sua oficina <span className="italic">&ldquo;Ouvir para Criar&rdquo;</span> — ministrada no
-              Centro Cultural São Paulo — reflete sua abordagem pedagógica: escuta ativa, percepção
-              crítica e a música como fenômeno vivo, não só como teoria na página.
+              <strong className="text-[var(--gold-2)]">
+                &ldquo;A Música e a Matemática da Natureza&rdquo;
+              </strong>{" "}
+              é resultado de anos de pesquisa e de sala de aula — um livro que nasceu da constatação
+              de que faltava em português uma obra que conectasse a intuição musical do músico
+              prático com o rigor conceitual que a música carrega desde Pitágoras.
             </p>
-            <p>
-              <span className="text-[var(--fg)]">A Música e a Matemática da Natureza</span> é seu
-              primeiro livro — o Volume I da Série Fundamentos da Música —, nascido da constatação
-              de que faltava uma ponte entre a física do som, a história dos sistemas musicais e a
-              prática cotidiana de quem faz música.
+            <p className="italic text-[var(--muted)]">
+              &ldquo;Não escrevi para matemáticos. Escrevi para músicos que um dia sentaram
+              num banco de escola e ouviram &lsquo;a música é matemática&rsquo; sem nunca
+              entenderem direito o que aquilo significava.&rdquo;
             </p>
-          </div>
-
-          <div className="flex flex-wrap gap-3 pt-2">
-            {["Guitarrista", "Produtor", "Professor", "Multi-instrumentista"].map((tag) => (
-              <span
-                key={tag}
-                className="rounded-full border border-[var(--gold)]/20 bg-[var(--gold)]/[0.06] px-3 py-1 text-[0.7rem] font-medium uppercase tracking-[0.1em] text-[var(--gold)]"
-              >
-                {tag}
-              </span>
-            ))}
           </div>
         </div>
       </div>

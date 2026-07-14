@@ -1,33 +1,52 @@
+"use client";
+
 import { Download } from "lucide-react";
+import { useEffect, useRef } from "react";
 
 export default function FinalCTA() {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.querySelectorAll(".reveal").forEach((child) => {
+              child.classList.add("in-view");
+            });
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   return (
-    <section className="relative z-[1] px-6 py-28 md:px-12">
+    <section ref={ref} className="section">
       <div className="mx-auto max-w-3xl text-center">
-        <span className="font-mono text-[0.7rem] font-medium uppercase tracking-[0.2em] text-[var(--gold)]">
-          Série Fundamentos da Música • Volume I
-        </span>
-        <h2 className="mt-4 text-balance text-3xl font-light leading-[1.2] tracking-[-0.01em] text-[var(--fg)] md:text-5xl">
-          A música é matemática que se ouve.
-          <br />
-          <span className="text-[var(--gold)]">A matemática é música que se pensa.</span>
+        <div className="eyebrow reveal">Garanta Seu Exemplar</div>
+        <h2 className="reveal mt-4 text-[clamp(1.5rem,3vw,2.5rem)] font-[var(--font-cinzel)] leading-[1.15] text-[var(--cream)]">
+          A Música e a Matemática da Natureza
         </h2>
-        <p className="mx-auto mt-6 max-w-xl text-[0.88rem] leading-relaxed text-[var(--muted)]">
-          PDF interativo com links, diagramas, notações e faixas de áudio explicativas.
-          <br />
-          Leia no computador, tablet ou celular.
+        <p className="reveal mx-auto mt-5 max-w-xl text-sm leading-[1.7] text-[var(--cream-dim)]">
+          Série Fundamentos da Música • Volume I
         </p>
 
-        <a
-          href="#"
-          className="mt-10 inline-flex items-center gap-3 rounded-sm border border-[var(--gold)] bg-[var(--gold)] px-8 py-4 text-sm font-medium uppercase tracking-[0.12em] text-[var(--bg)] transition-all duration-300 hover:bg-transparent hover:text-[var(--gold)]"
-        >
-          <Download className="size-4" />
-          Comprar — R$ 47
-        </a>
-        <p className="mt-4 font-mono text-[0.65rem] uppercase tracking-[0.1em] text-[var(--muted-2)]">
-          PDF • 54 páginas • entrega imediata
-        </p>
+        <div className="reveal mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+          <a
+            href="#"
+            className="btn-primary"
+          >
+            <Download className="size-4" />
+            Comprar Agora — R$ 47
+          </a>
+          <p className="text-xs text-[var(--muted)]">PDF • 54 páginas • Acesso vitalício</p>
+        </div>
       </div>
     </section>
   );

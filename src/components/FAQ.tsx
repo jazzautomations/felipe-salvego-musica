@@ -1,75 +1,99 @@
 "use client";
 
-import { useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
 
 const FAQS = [
   {
-    q: "Preciso saber ler partitura?",
-    a: "Não. O livro usa notação musical quando necessário, mas todo conceito é explicado em linguagem acessível, com diagramas, gráficos e exemplos sonoros. Um músico de ouvido, um produtor de beat e um engenheiro conseguem acompanhar sem partitura.",
+    q: "Preciso saber matemática para ler este livro?",
+    a: "Não. O livro usa matemática do ensino fundamental — frações, proporções e noções básicas de logaritmos explicadas no texto. O foco é sempre musical.",
   },
   {
-    q: "Qual o nível de matemática exigido?",
-    a: "Matemática básica: frações, proporções e logaritmos no nível do ensino médio. O foco é no conceito — a conta vem a reboque. Se você sabe que 2/1 é o dobro de 1/1, você já tem 90% do que precisa.",
+    q: "O que é o comma pitagórico?",
+    a: "É o 'problema' que surge quando afinamos 12 quintas perfeitas empilhadas — elas não fecham um ciclo de 7 oitavas. Sobra uma diferença de aproximadamente 23,46 cents, quase um quarto de semitom. Esse resto é o comma pitagórico, e resolver isso (ou conviver com isso) é o tema central da história da afinação ocidental.",
   },
   {
-    q: "É só teoria ou tem prática musical?",
-    a: "Cada módulo conecta a teoria a um fenômeno musical concreto: a série harmônica aparece no timbre do violão, o comma pitagórico aparece na quinta do lobo dos órgãos, as blue notes aparecem no bending do blues. O livro foi escrito por um músico em atividade, não por um teórico de gabinete.",
+    q: "O que significa 12-TET?",
+    a: "12-tone Equal Temperament — o sistema de afinação que divide a oitava em 12 semitons iguais (cada um de 100 cents). É o padrão da música ocidental desde o século XVIII, resolvendo o comma pitagórico ao distribuir o erro uniformemente entre todas as notas.",
   },
   {
-    q: "O que faz este livro ser diferente de um livro de teoria musical comum?",
-    a: "Livros de teoria tradicionais ensinam o sistema como dado — &lsquo;as notas são estas, as escalas são aquelas&rsquo;. Este livro pergunta: por que 12 notas? Por que o semitom? O que é um tom, afinal? O livro reconta a história das descobertas: dos sumérios ao 12-TET, passando por Pitágoras, os sistemas árabes, indianos e o blues.",
+    q: "O livro tem partituras ou exemplos práticos?",
+    a: "Sim, o livro inclui diagramas de intervalos, ilustrações da Série Harmônica, gráficos de cents e referências a peças musicais históricas que ilustram cada conceito.",
   },
   {
-    q: "O livro cobre sistemas não ocidentais?",
-    a: "Sim. A Parte IX (Ritmo, Melodia e a Mesma Coisa) e os apêndices dedicam seções inteiras aos sistemas árabe-maqam, turco-makam e indiano-raga, incluindo intervalos microtonais, escalas de 22 shrutis e os commas específicos de cada tradição.",
+    q: "O que é a Série Harmônica?",
+    a: "É o fenômeno físico pelo qual um som fundamental gera uma série de frequências múltiplas (2×, 3×, 4×...). Essas frequências 'naturais' são a base de todos os intervalos musicais. O livro mostra como a série se relaciona com as escalas, os acordes e a percepção auditiva.",
   },
   {
-    q: "Vai ter Volume II?",
-    a: "Sim. Este é o Volume I da Série Fundamentos da Música. O Volume II tratará de harmonia funcional, o Volume III de ritmo e métrica, e o Volume IV de forma e análise. O Volume I estabelece a base — o som, a afinação, os sistemas de notas.",
+    q: "O livro aborda microtonalismo?",
+    a: "Sim. O último capítulo explora as limitações do 12-TET e apresenta sistemas microtonais (24-TET, 31-TET, 53-TET), além do papel da música eletrônica e contemporânea na expansão da paleta harmônica.",
+  },
+  {
+    q: "Quanto custa e como comprar?",
+    a: "R$ 47,00. A compra é feita diretamente com o autor via WhatsApp ou Instagram. Ao adquirir, você recebe o PDF por e-mail.",
   },
 ];
 
 export default function FAQ() {
   const [open, setOpen] = useState<number | null>(null);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.querySelectorAll(".reveal").forEach((child, i) => {
+              (child as HTMLElement).style.setProperty("--i", String(i));
+              child.classList.add("in-view");
+            });
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   return (
-    <section id="faq" className="relative z-[1] px-6 py-28 md:px-12">
+    <section className="section" ref={ref}>
       <div className="mx-auto max-w-3xl">
-        <div className="mb-14 text-center">
-          <span className="font-mono text-[0.7rem] font-medium uppercase tracking-[0.2em] text-[var(--gold)]">
-            FAQ
-          </span>
-          <h2 className="mt-2 text-3xl font-light leading-[1.15] tracking-[-0.01em] text-[var(--fg)] md:text-4xl">
-            Perguntas frequentes
-          </h2>
-        </div>
+        <div className="eyebrow reveal">Perguntas Frequentes</div>
 
-        <div className="space-y-3">
+        <div className="mt-8 space-y-3">
           {FAQS.map((faq, i) => (
-            <div
-              key={i}
-              className="group rounded-sm border border-[var(--border)] bg-[var(--bg-2)] transition-all duration-300"
-            >
+            <div key={i} className="reveal">
               <button
                 onClick={() => setOpen(open === i ? null : i)}
-                className="flex w-full items-center justify-between px-6 py-5 text-left text-sm font-medium leading-snug text-[var(--fg)] transition-colors hover:text-[var(--gold)]"
+                className="faq-btn"
+                aria-expanded={open === i}
               >
-                {faq.q}
-                <ChevronDown
-                  className={`size-4 shrink-0 text-[var(--muted)] transition-transform duration-300 ${
-                    open === i ? "rotate-180" : ""
-                  }`}
-                />
+                <span className="pr-4 text-left text-sm font-medium leading-[1.4] text-[var(--cream)]">
+                  {faq.q}
+                </span>
+                <svg
+                  className={`faq-chevron shrink-0 ${open === i ? "rotated" : ""}`}
+                  width="14"
+                  height="14"
+                  viewBox="0 0 14 14"
+                  fill="none"
+                >
+                  <path
+                    d="M4 6L7 9L10 6"
+                    stroke="currentColor"
+                    strokeWidth="1.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
               </button>
-              <div
-                className={`overflow-hidden transition-all duration-300 ${
-                  open === i ? "max-h-80 opacity-100" : "max-h-0 opacity-0"
-                }`}
-              >
-                <p className="border-t border-[var(--border)] px-6 pb-5 pt-4 text-[0.82rem] leading-relaxed text-[var(--muted)]">
+              <div className={`faq-content ${open === i ? "open" : ""}`}>
+                <div className="px-5 pb-5 pt-2 text-sm leading-[1.6] text-[var(--muted)]">
                   {faq.a}
-                </p>
+                </div>
               </div>
             </div>
           ))}
