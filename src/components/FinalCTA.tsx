@@ -1,54 +1,62 @@
 "use client";
 
-import { Download } from "lucide-react";
+import { BookOpen } from "lucide-react";
 import { useEffect, useRef } from "react";
+import LeadForm from "./LeadForm";
 
 export default function FinalCTA() {
-  const ref = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const el = ref.current;
+    const el = sectionRef.current;
     if (!el) return;
-    const io = new IntersectionObserver(
+
+    const revealEls = el.querySelectorAll(".reveal");
+    const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.querySelectorAll(".reveal").forEach((child) => {
-              child.classList.add("in-view");
-            });
-            io.unobserve(e.target);
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("revealed");
+            observer.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.3 }
+      { threshold: 0.2 }
     );
-    io.observe(el);
-    return () => io.disconnect();
+    revealEls.forEach((r) => observer.observe(r));
+    return () => observer.disconnect();
   }, []);
 
   return (
-    <section ref={ref} className="section">
+    <section
+      ref={sectionRef}
+      id="baixar"
+      className="relative overflow-hidden bg-gradient-to-b from-stone-900 via-stone-900 to-stone-950 px-4 py-20 md:px-6 md:py-28"
+    >
       <div className="mx-auto max-w-3xl text-center">
-        <div className="eyebrow reveal">Download Grátis</div>
-        <h2 className="reveal mt-4 text-[clamp(1.5rem,3vw,2.5rem)] font-[var(--font-cinzel)] leading-[1.15] text-[var(--cream)]">
-          A Música e a Matemática da Natureza
+        <span className="reveal mb-4 inline-block rounded-full border border-emerald-700/40 bg-emerald-900/20 px-4 py-1.5 text-xs font-medium tracking-widest uppercase text-emerald-400">
+          Download gratuito
+        </span>
+
+        <h2 className="reveal mt-4 text-[clamp(1.75rem,5vw,2.75rem)] font-light leading-tight tracking-tight text-stone-100">
+          Leve a música e a{" "}
+          <span className="font-semibold italic text-emerald-400">matemática da natureza</span>{" "}
+          com você
         </h2>
-        <p className="reveal mx-auto mt-5 max-w-xl text-sm leading-[1.7] text-[var(--cream-dim)]">
-          Série Fundamentos da Música • Volume I
+
+        <p className="reveal mx-auto mt-4 max-w-lg text-base leading-relaxed text-stone-400">
+          Preencha abaixo e receba o PDF completo na hora. Sem spam, sem pegadinha — é só o
+          livro e, de vez em quando, novidades sobre música e matemática.
         </p>
 
-        <div className="reveal mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-          <a
-            href="https://jazzautomations.zo.space/download"
-            target="_blank"
-            className="btn-primary"
-          >
-            <Download className="size-4" />
-            Baixar Grátis
-          </a>
-          <p className="px-4 text-xs leading-relaxed text-[var(--muted)]">
-            PDF • 54 páginas • Sem cadastro • Download direto
-          </p>
+        <div className="reveal mx-auto mt-10 max-w-md">
+          <div className="rounded-xl border border-stone-700/60 bg-stone-800/40 p-6 backdrop-blur-sm md:p-8">
+            <div className="mb-6 flex items-center justify-center gap-3 text-stone-400">
+              <BookOpen className="size-5" />
+              <span className="text-sm">PDF • 150+ páginas • Acesso vitalício</span>
+            </div>
+            <LeadForm />
+          </div>
         </div>
       </div>
     </section>

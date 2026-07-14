@@ -1,90 +1,89 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import Image from "next/image";
 
 export default function Hero() {
-  const bgRef = useRef<HTMLDivElement>(null);
-  const [mounted, setMounted] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    setMounted(true);
-    const onScroll = () => {
-      if (!bgRef.current) return;
-      const y = window.scrollY * 0.3;
-      bgRef.current.style.transform = `translateY(${y}px)`;
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const el = sectionRef.current;
+    if (!el) return;
+    const revealEls = el.querySelectorAll(".reveal");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("revealed");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+    revealEls.forEach((r) => observer.observe(r));
+    return () => observer.disconnect();
   }, []);
 
   return (
-    <section className="hero-section">
-      <div ref={bgRef} className="hero-bg-layer [mask-image:radial-gradient(ellipse_80%_70%_at_50%_50%,black,transparent)]">
-        <Image
-          src="/images/hero-poster.png"
-          alt=""
-          fill
-          className="object-cover"
-          priority
-          sizes="100vw"
-        />
-      </div>
+    <section
+      ref={sectionRef}
+      className="relative flex min-h-dvh items-center justify-center overflow-hidden bg-stone-950 pt-16"
+    >
+      {/* Grain overlay */}
+      <div className="pointer-events-none absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJmIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc0IiBudW1PY3RhdmVzPSI0IiAvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCNmKSIgb3BhY2l0eT0iLjA0IiAvPjwvc3ZnPg==')] opacity-30" />
 
-      <div className="hero-overlay" />
-      <div className="hero-glow" />
+      <div className="relative z-10 mx-auto grid w-full max-w-6xl items-center gap-8 px-4 md:grid-cols-2 md:gap-12 md:px-6">
+        {/* Texto */}
+        <div className="text-center md:text-left">
+          <span className="reveal mb-4 inline-block rounded-full border border-emerald-700/30 bg-emerald-900/15 px-3.5 py-1 text-xs font-medium tracking-widest uppercase text-emerald-400">
+            Série Fundamentos da Música • Vol. I
+          </span>
 
-      <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center px-5 text-center md:px-8">
-        <span className="eyebrow mb-8">Série Fundamentos da Música • Vol. 1</span>
+          <h1 className="reveal mt-4 text-[clamp(2rem,6vw,3.5rem)] font-light leading-[1.08] tracking-tight text-stone-100">
+            A Música e a{" "}
+            <span className="font-semibold italic text-emerald-400">Matemática da Natureza</span>
+          </h1>
 
-        <h1
-          className={`max-w-4xl font-[var(--font-cinzel)] text-[clamp(2rem,6vw,4.2rem)] font-bold leading-[1.1] tracking-tight text-[var(--cream)] transition-all duration-1000 ${
-            mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-          }`}
-        >
-          A <span className="text-[var(--gold-2)]">Música</span> e a{" "}
-          <span className="text-[var(--gold-2)]">Matemática</span>
-          <br className="hidden sm:block" />
-          da Natureza
-        </h1>
+          <p className="reveal mt-5 text-base leading-relaxed text-stone-400 md:text-lg">
+            Física • Matemática • História • Cultura — das origens antigas ao temperamento
+            igual, a jornada dos intervalos que organizam o som.
+          </p>
 
-        <p
-          className={`mt-6 max-w-2xl text-[clamp(0.85rem,2vw,1.1rem)] leading-[1.6] text-[var(--cream-dim)] transition-all duration-1000 delay-150 ${
-            mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
-          Por que as notas soam bem juntas? Por que uma oitava tem 12 notas?
-          A física dos intervalos, a história da afinação e a matemática secreta
-          que organiza toda a música ocidental.
-        </p>
+          <p className="reveal mt-2 text-sm italic text-stone-500">
+            Felipe Salvego
+          </p>
 
-        <div
-          className={`mt-8 flex flex-wrap items-center justify-center gap-4 transition-all duration-1000 delay-300 ${
-            mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-          }`}
-        >
-          <a href="https://jazzautomations.zo.space/download" target="_blank" className="btn-primary">
-            Baixar Grátis
-          </a>
-          <a href="#livro" className="btn-secondary">
-            Saber mais
-          </a>
+          <div className="reveal mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-start">
+            <a
+              href="#baixar"
+              className="inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-emerald-500"
+            >
+              Baixar grátis
+            </a>
+            <a
+              href="#livro"
+              className="inline-flex items-center gap-2 rounded-lg border border-stone-700 px-6 py-3.5 text-sm font-medium text-stone-300 transition hover:border-stone-500 hover:text-stone-100"
+            >
+              Sobre o livro
+            </a>
+          </div>
         </div>
 
-        <div className="mt-6 flex items-center gap-3">
-          {["Física", "Matemática", "História", "Cultura"].map((tag) => (
-            <span key={tag} className="tag-pill text-[0.55rem]">
-              {tag}
-            </span>
-          ))}
+        {/* Poster */}
+        <div className="reveal flex justify-center">
+          <div className="relative w-full max-w-sm">
+            <div className="absolute -inset-1 rounded-2xl bg-gradient-to-b from-emerald-500/20 to-stone-700/20 opacity-60 blur-xl" />
+            <Image
+              src="/hero-poster.png"
+              alt="A Música e a Matemática da Natureza — Felipe Salvego"
+              className="relative rounded-xl border border-stone-700/60 object-cover shadow-2xl"
+              priority
+              width={500}
+              height={700}
+            />
+          </div>
         </div>
-      </div>
-
-      <div className="scroll-indicator">
-        <span role="img" aria-label="scroll">
-          ↓
-        </span>
-        <div className="scroll-line" />
       </div>
     </section>
   );
