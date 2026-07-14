@@ -10,7 +10,6 @@ export default function LeadForm() {
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
   const [pdfUrl, setPdfUrl] = useState("");
-  const [bonusUrl, setBonusUrl] = useState("");
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -24,14 +23,12 @@ export default function LeadForm() {
         body: JSON.stringify({ nome: nome.trim(), email: email.trim() }),
       });
       const data = await res.json();
-      if (data.ok && data.pdfs) {
-        setPdfUrl(data.pdfs[0]?.url || "/livro-musica-matematica.pdf");
-        setBonusUrl(data.pdfs[1]?.url || "/ouvir-para-criar.pdf");
+      if (data.ok) {
+        setPdfUrl(data.pdfUrl || "/livro-musica-matematica.pdf");
         setDone(true);
       }
     } catch {
       setPdfUrl("/livro-musica-matematica.pdf");
-      setBonusUrl("/ouvir-para-criar.pdf");
       setDone(true);
     } finally {
       setLoading(false);
@@ -43,31 +40,17 @@ export default function LeadForm() {
       <div className="space-y-4">
         <div className="flex items-center justify-center gap-2 rounded border border-[color-mix(in_srgb,#4ade80,transparent_60%)] bg-[color-mix(in_srgb,#4ade80,transparent_92%)] px-4 py-3 text-[0.82rem] text-[#86efac]">
           <Check className="size-4" />
-          Pronto! Seus livros estão prontos para download.
+          Pronto! Seu livro está pronto para download.
         </div>
 
-        <div className="flex flex-col gap-3">
-          {pdfUrl && (
-            <a
-              href={pdfUrl}
-              download
-              className="btn-primary justify-center"
-            >
-              <Download className="size-4" />
-              Baixar: A Música e a Matemática da Natureza
-            </a>
-          )}
-          {bonusUrl && (
-            <a
-              href={bonusUrl}
-              download
-              className="btn-secondary justify-center"
-            >
-              <Download className="size-4" />
-              Bônus: Ouvir para Criar
-            </a>
-          )}
-        </div>
+        <a
+          href={pdfUrl}
+          download
+          className="btn-primary flex w-full items-center justify-center gap-2"
+        >
+          <Download className="size-4" />
+          Baixar: A Música e a Matemática da Natureza
+        </a>
       </div>
     );
   }
@@ -131,7 +114,7 @@ export default function LeadForm() {
       </button>
 
       <p className="text-center font-[var(--font-jetbrains)] text-[0.6rem] tracking-[0.1em] uppercase text-[var(--muted)]">
-        Sem spam. Apenas seus livros.
+        Sem spam. Apenas seu livro.
       </p>
     </form>
   );

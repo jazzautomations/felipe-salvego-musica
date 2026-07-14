@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
         body: JSON.stringify({
           nome,
           email,
-          livro: "Música e Matemática + Ouvir para Criar",
+          livro: "A Música e a Matemática da Natureza",
           ip: req.headers.get("x-forwarded-for") || "",
         }),
       });
@@ -31,9 +31,6 @@ export async function POST(req: NextRequest) {
 
   return NextResponse.json({
     ok: true,
-    pdfs: [
-      { nome: "A Música e a Matemática da Natureza", url: "/livro-musica-matematica.pdf" },
-      { nome: "Ouvir para Criar", url: "/ouvir-para-criar.pdf" },
-    ],
+    pdfUrl: "/livro-musica-matematica.pdf",
   });
 }
