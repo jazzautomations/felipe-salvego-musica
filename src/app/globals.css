@@ -12,7 +12,6 @@
   --cream-dim: #cabf9f;
   --muted: #837a68;
 
-  /* aliases so components that use --fg / --border / --muted-2 work */
   --fg: var(--cream);
   --fg-dim: var(--cream-dim);
   --border: color-mix(in srgb, var(--gold), transparent 78%);
@@ -23,6 +22,7 @@
 /* ============ BASE ============ */
 html {
   scroll-behavior: smooth;
+  overflow-x: clip;
 }
 
 body {
@@ -32,7 +32,7 @@ body {
   font-size: 17px;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body::before {
@@ -74,7 +74,8 @@ body::before {
     transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.reveal.in-view {
+.reveal.in-view,
+.reveal.revealed {
   opacity: 1;
   transform: translateY(0);
 }
@@ -142,7 +143,29 @@ body::before {
   }
 }
 
-/* ============ TIMELINE ============ */.timeline-card {
+/* ============ CARD (reusable) ============ */
+.card {
+  border: 1px solid var(--border);
+  padding: 1.5rem;
+  background: var(--bg-2);
+  border-radius: 4px;
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.card:hover {
+  border-color: var(--gold-dim);
+  transform: translateY(-2px);
+}
+
+/* ============ TIMELINE ============ */
+.timeline-line {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold-dim), transparent);
+  margin-top: 1.5rem;
+}
+
+.timeline-card {
   border-left: 1px solid var(--border);
   padding: 0 0 1.75rem 1.25rem;
   position: relative;
@@ -157,32 +180,12 @@ body::before {
   position: absolute;
   left: -6px;
   top: 0;
-  display: block;
-  transition: background 0.3s, transform 0.3s;
+  transition: all 0.3s ease;
 }
 
-.timeline-dot:hover {
+.timeline-card:hover .timeline-dot {
   background: var(--gold);
-  transform: scale(1.4);
-}
-
-.timeline-line {
-  width: 100%;
-  height: 1px;
-  background: linear-gradient(to right, transparent, var(--gold), transparent);
-  opacity: 0.15;
-}
-
-@media (min-width: 768px) {
-  .timeline-card {
-    border-left: none;
-    border-top: 1px solid var(--border);
-    padding: 1.25rem 0 0 0;
-  }
-  .timeline-dot {
-    left: calc(50% - 5px);
-    top: -6px;
-  }
+  transform: scale(1.3);
 }
 
 @media (max-width: 767px) {
@@ -195,6 +198,7 @@ body::before {
     top: 2px;
   }
 }
+
 .tl-dot {
   width: 11px;
   height: 11px;
@@ -219,7 +223,7 @@ body::before {
   margin: 0 auto;
 }
 
-/* ============ STAT CARDS (reusable) ============ */
+/* ============ STAT CARDS ============ */
 .stat-card {
   border: 1px solid var(--border);
   padding: 1.5rem 1.25rem;
@@ -267,36 +271,71 @@ body::before {
 
 .book-card img {
   transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 20px 60px -16px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 20px 60px -16px rgba(0, 0, 0, 0.7);
 }
 
 .book-card:hover img {
-  transform: rotateY(-2deg) scale(1.02);
+  transform: rotateY(-3deg) scale(1.02);
 }
 
-/* decorative offset frame */
+/* offset frame for book */
 .offset-frame {
   position: relative;
+  padding: 8px;
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  border-radius: 4px;
 }
 
-.offset-frame::after {
+.offset-frame::before {
   content: "";
   position: absolute;
-  inset: 8px -8px -8px 8px;
+  inset: -1px;
   border: 1px solid var(--gold-dim);
-  opacity: 0.25;
-  border-radius: 2px;
+  border-radius: 4px;
+  opacity: 0.15;
   pointer-events: none;
-  z-index: -1;
 }
 
-/* ============ AUTHOR IMAGE GRADIENT OVERLAY ============ */
-.author-img-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, transparent 40%, rgba(10, 8, 6, 0.7) 100%);
-  pointer-events: none;
-  z-index: 2;
+/* ============ FAQ ACCORDION ============ */
+.faq-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  text-align: left;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  color: var(--cream);
+  transition: color 0.2s ease;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-family: inherit;
+}
+
+.faq-btn:hover {
+  color: var(--gold-2);
+}
+
+.faq-chevron {
+  transition: transform 0.3s ease;
+  color: var(--muted);
+}
+
+.faq-chevron.rotated {
+  transform: rotate(180deg);
+}
+
+.faq-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.faq-content.open {
+  max-height: 400px;
 }
 
 /* ============ TAG PILL ============ */
@@ -386,41 +425,6 @@ body::before {
   width: 1px;
   height: 2rem;
   background: linear-gradient(to bottom, var(--gold-dim), transparent);
-}
-
-/* ============ FAQ ACCORDION ============ */
-.faq-btn {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.25rem 1.5rem;
-  text-align: left;
-  font-size: 0.88rem;
-  line-height: 1.4;
-  color: var(--cream);
-  transition: color 0.2s ease;
-  cursor: pointer;
-  background: none;
-  border: none;
-  font-family: inherit;
-}
-
-.faq-btn:hover {
-  color: var(--gold-2);
-}
-
-.faq-answer {
-  overflow: hidden;
-  transition: all 0.3s ease;
-}
-
-.faq-answer-inner {
-  border-top: 1px solid var(--border);
-  padding: 1rem 1.5rem 1.25rem;
-  font-size: 0.82rem;
-  line-height: 1.7;
-  color: var(--muted);
 }
 
 /* ============ SUBTLE BORDER SEPARATOR ============ */

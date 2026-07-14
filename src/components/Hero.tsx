@@ -29,7 +29,7 @@ export default function Hero() {
       {/* Background layer */}
       <div className="hero-bg-layer">
         <Image
-          src="/hero-poster.png"
+          src="/images/hero-poster.png"
           alt=""
           fill
           className="object-cover"
@@ -77,7 +77,7 @@ export default function Hero() {
         <div className="reveal flex justify-center">
           <div className="relative w-full max-w-[280px] sm:max-w-xs md:max-w-sm">
             <Image
-              src="/hero-poster.png"
+              src="/images/hero-poster.png"
               alt="Capa — A Música e a Matemática da Natureza"
               className="relative rounded-sm border border-[color-mix(in_srgb,var(--gold),transparent_85%)] object-cover shadow-[0_24px_80px_-16px_rgba(0,0,0,0.7)]"
               priority

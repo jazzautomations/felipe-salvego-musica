@@ -4,18 +4,18 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 
 const NAV_ITEMS = [
-  { label: "O livro", href: "#livro" },
+  { label: "O Livro", href: "#livro" },
   { label: "Autor", href: "#autor" },
-  { label: "Dúvidas", href: "#faq" },
+  { label: "Perguntas", href: "#faq" },
 ];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 right-0 left-0 z-50 border-b border-stone-800/60 bg-stone-950/70 backdrop-blur-xl">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 md:px-6">
-        <a href="#" className="text-sm font-semibold tracking-wider text-stone-100 uppercase">
+    <nav className="fixed top-0 right-0 left-0 z-50 border-b border-[var(--border)] bg-[rgba(10,8,6,0.85)] backdrop-blur-xl">
+      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 md:px-6">
+        <a href="#topo" className="font-[var(--font-cinzel)] text-xs font-semibold tracking-[0.15em] uppercase text-[var(--cream)]">
           Felipe Salvego
         </a>
 
@@ -25,39 +25,39 @@ export default function Navbar() {
             <a
               key={item.href}
               href={item.href}
-              className="text-sm text-stone-400 transition hover:text-stone-200"
+              className="text-[0.72rem] tracking-[0.1em] uppercase text-[var(--cream-dim)] transition-colors hover:text-[var(--gold)]"
             >
               {item.label}
             </a>
           ))}
           <a
             href="#baixar"
-            className="rounded-lg bg-emerald-600 px-5 py-2 text-sm font-semibold text-white transition hover:bg-emerald-500"
+            className="btn-primary !py-2 !px-5 !text-[0.65rem]"
           >
-            Baixar grátis
+            Baixar Grátis
           </a>
         </div>
 
         {/* Mobile toggle */}
         <button
           onClick={() => setOpen(!open)}
-          className="text-stone-400 md:hidden"
+          className="text-[var(--cream-dim)] md:hidden"
           aria-label="Menu"
         >
-          {open ? <X className="size-6" /> : <Menu className="size-6" />}
+          {open ? <X className="size-5" /> : <Menu className="size-5" />}
         </button>
       </div>
 
       {/* Mobile menu */}
       {open && (
-        <div className="border-t border-stone-800/60 bg-stone-950/95 backdrop-blur-xl md:hidden">
-          <div className="flex flex-col gap-2 px-4 py-4">
+        <div className="border-t border-[var(--border)] bg-[rgba(10,8,6,0.95)] backdrop-blur-xl md:hidden">
+          <div className="flex flex-col gap-1 px-4 py-4">
             {NAV_ITEMS.map((item) => (
               <a
                 key={item.href}
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className="rounded-lg px-3 py-2 text-sm text-stone-400 transition hover:bg-stone-800 hover:text-stone-200"
+                className="rounded px-3 py-2.5 text-[0.78rem] text-[var(--cream-dim)] transition-colors hover:bg-[var(--bg-2)] hover:text-[var(--cream)]"
               >
                 {item.label}
               </a>
@@ -65,9 +65,9 @@ export default function Navbar() {
             <a
               href="#baixar"
               onClick={() => setOpen(false)}
-              className="mt-2 rounded-lg bg-emerald-600 px-3 py-2.5 text-center text-sm font-semibold text-white"
+              className="btn-primary mt-2 justify-center !text-[0.68rem]"
             >
-              Baixar grátis
+              Baixar Grátis
             </a>
           </div>
         </div>
