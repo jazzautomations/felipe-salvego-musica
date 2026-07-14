@@ -1,181 +1,136 @@
 "use client";
 
-import { useState } from "react";
-
-// COLE AQUI A URL DO SEU APPS SCRIPT IMPLANTADO
-// (após "Implantar > Nova implantação > Aplicativo da Web")
-const APPS_SCRIPT_URL = process.env.NEXT_PUBLIC_APPSCRIPT_URL || "";
+import { useState, type FormEvent } from "react";
+import { Download, Check, Loader2, Mail, User } from "lucide-react";
 
 export default function LeadForm() {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
-  const [whatsapp, setWhatsapp] = useState("");
-  const [consentiu, setConsentiu] = useState(false);
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-  const [msg, setMsg] = useState("");
+  const [lgpd, setLgpd] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [done, setDone] = useState(false);
+  const [pdfUrl, setPdfUrl] = useState("");
+  const [bonusUrl, setBonusUrl] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    if (!nome.trim() || !email.trim() || !consentiu) return;
+    if (!nome.trim() || !email.trim() || !lgpd || loading) return;
 
-    setStatus("loading");
-    setMsg("");
-
+    setLoading(true);
     try {
-      // Tenta enviar pro Google Sheets
-      if (APPS_SCRIPT_URL) {
-        await fetch(APPS_SCRIPT_URL, {
-          method: "POST",
-          mode: "no-cors",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            nome: nome.trim(),
-            email: email.trim(),
-            whatsapp: whatsapp.trim(),
-            fonte: "landing-musica"
-          }),
-        });
+      const res = await fetch("/api/baixar-lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nome: nome.trim(), email: email.trim() }),
+      });
+      const data = await res.json();
+      if (data.ok) {
+        setPdfUrl(data.pdfUrl);
+        setBonusUrl(data.bonusUrl);
+        setDone(true);
       }
-
-      setStatus("success");
-      // Dispara download do PDF
-      const link = document.createElement("a");
-      link.href = "/livro-musica-matematica.pdf";
-      link.download = "musica-e-matematica-felipe-salvego.pdf";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
     } catch {
-      // Mesmo se o Sheets falhar, libera o download (livro é grátis)
-      setStatus("success");
-      const link = document.createElement("a");
-      link.href = "/livro-musica-matematica.pdf";
-      link.download = "musica-e-matematica-felipe-salvego.pdf";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      // Mesmo se falhar, liberar o download
+      setPdfUrl("/livro-musica-matematica.pdf");
+      setBonusUrl("/ouvir-para-criar.pdf");
+      setDone(true);
+    } finally {
+      setLoading(false);
     }
-  };
+  }
 
-  // Estado de sucesso
-  if (status === "success") {
+  // Estado: download disponível
+  if (done) {
     return (
-      <div className="rounded-xl border border-emerald-800/40 bg-emerald-950/30 p-8 text-center">
-        <div className="mx-auto mb-3 flex size-12 items-center justify-center rounded-full bg-emerald-500/15 text-2xl text-emerald-400">
-          ✓
+      <div className="space-y-4">
+        <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-6 text-center">
+          <Check className="mx-auto mb-3 h-8 w-8 text-emerald-400" />
+          <p className="text-lg font-semibold text-emerald-300">Pronto! Seus livros estão aqui:</p>
+          <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:justify-center">
+            <a
+              href={pdfUrl}
+              download
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-amber-500 px-6 py-3 font-semibold text-black transition-colors hover:bg-amber-400"
+            >
+              <Download className="h-5 w-5" />
+              Baixar: Música & Matemática
+            </a>
+            {bonusUrl && (
+              <a
+                href={bonusUrl}
+                download
+                className="inline-flex items-center justify-center gap-2 rounded-xl border border-amber-500/40 bg-amber-500/10 px-6 py-3 font-semibold text-amber-300 transition-colors hover:bg-amber-500/20"
+              >
+                <Download className="h-5 w-5" />
+                Bônus: Ouvir para Criar
+              </a>
+            )}
+          </div>
         </div>
-        <p className="text-base font-medium text-stone-100">
-          Download iniciado!
-        </p>
-        <p className="mt-1 text-sm text-stone-400">
-          Se o PDF não baixou, {" "}
-          <a
-            href="/livro-musica-matematica.pdf"
-            className="underline underline-offset-2 text-emerald-400 hover:text-emerald-300"
-            download
-          >
-            clique aqui
-          </a>.
-        </p>
       </div>
     );
   }
 
+  // Estado: formulário
   return (
-    <form onSubmit={handleSubmit} className="mx-auto w-full max-w-sm space-y-4">
-      {/* Nome */}
-      <div>
-        <label htmlFor="nome" className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-stone-400">
-          Nome <span className="text-red-400">*</span>
-        </label>
+    <form onSubmit={handleSubmit} className="mx-auto max-w-md space-y-4">
+      <div className="relative">
+        <User className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-white/30" />
         <input
-          id="nome"
           type="text"
-          required
+          placeholder="Seu nome"
           value={nome}
           onChange={(e) => setNome(e.target.value)}
-          placeholder="Seu nome"
-          className="w-full rounded-lg border border-stone-700/60 bg-stone-800/50 px-4 py-3 text-sm text-stone-100 placeholder-stone-500 outline-none transition focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600/50"
+          required
+          className="w-full rounded-xl border border-white/10 bg-white/5 py-3 pl-12 pr-4 text-white placeholder-white/40 outline-none transition-colors focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/30"
         />
       </div>
-
-      {/* Email */}
-      <div>
-        <label htmlFor="email" className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-stone-400">
-          Email <span className="text-red-400">*</span>
-        </label>
+      <div className="relative">
+        <Mail className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-white/30" />
         <input
-          id="email"
           type="email"
-          required
+          placeholder="Seu email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="seu@email.com"
-          className="w-full rounded-lg border border-stone-700/60 bg-stone-800/50 px-4 py-3 text-sm text-stone-100 placeholder-stone-500 outline-none transition focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600/50"
+          required
+          className="w-full rounded-xl border border-white/10 bg-white/5 py-3 pl-12 pr-4 text-white placeholder-white/40 outline-none transition-colors focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/30"
         />
       </div>
 
-      {/* WhatsApp */}
-      <div>
-        <label htmlFor="whatsapp" className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-stone-400">
-          WhatsApp <span className="text-stone-600">(opcional)</span>
-        </label>
-        <input
-          id="whatsapp"
-          type="tel"
-          value={whatsapp}
-          onChange={(e) => setWhatsapp(e.target.value)}
-          placeholder="(11) 99999-8888"
-          className="w-full rounded-lg border border-stone-700/60 bg-stone-800/50 px-4 py-3 text-sm text-stone-100 placeholder-stone-500 outline-none transition focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600/50"
-        />
-      </div>
-
-      {/* LGPD */}
-      <label className="flex items-start gap-3 text-xs leading-relaxed text-stone-500">
+      <label className="flex cursor-pointer items-start gap-3 text-sm text-white/50">
         <input
           type="checkbox"
-          checked={consentiu}
-          onChange={(e) => setConsentiu(e.target.checked)}
-          className="mt-0.5 size-4 shrink-0 rounded border-stone-600 bg-stone-800 accent-emerald-600"
+          checked={lgpd}
+          onChange={(e) => setLgpd(e.target.checked)}
+          required
+          className="mt-0.5 h-4 w-4 rounded border-white/20 bg-white/5 accent-amber-500"
         />
         <span>
           Concordo com a{" "}
-          <a
-            href="/privacidade"
-            className="underline underline-offset-2 text-stone-400 hover:text-stone-300"
-          >
-            política de privacidade (LGPD)
+          <a href="/privacidade" className="underline decoration-white/30 hover:text-white/70">
+            Política de Privacidade
           </a>{" "}
-          e aceito receber novidades sobre música e matemática.
+          e autorizo o uso dos meus dados conforme a LGPD.
         </span>
       </label>
 
-      {/* Erro */}
-      {status === "error" && (
-        <p className="text-xs text-red-400">{msg || "Erro ao enviar. Tente novamente."}</p>
-      )}
-
-      {/* Botão */}
       <button
         type="submit"
-        disabled={status === "loading" || !nome.trim() || !email.trim() || !consentiu}
-        className="relative w-full overflow-hidden rounded-lg bg-emerald-600 px-6 py-3.5 text-sm font-semibold uppercase tracking-wider text-white transition-all duration-300 hover:bg-emerald-500 disabled:cursor-not-allowed disabled:opacity-40"
+        disabled={!nome.trim() || !email.trim() || !lgpd || loading}
+        className="flex w-full items-center justify-center gap-2 rounded-xl bg-amber-500 py-3.5 font-semibold text-black transition-all hover:bg-amber-400 disabled:cursor-not-allowed disabled:opacity-40"
       >
-        <span className={status === "loading" ? "opacity-0" : "opacity-100"}>
-          Baixar Grátis
-        </span>
-        {status === "loading" && (
-          <span className="absolute inset-0 flex items-center justify-center">
-            <svg className="size-5 animate-spin" viewBox="0 0 24 24" fill="none">
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-            </svg>
-          </span>
+        {loading ? (
+          <Loader2 className="h-5 w-5 animate-spin" />
+        ) : (
+          <>
+            <Download className="h-5 w-5" />
+            Baixar Grátis
+          </>
         )}
       </button>
 
-      <p className="text-center text-[0.65rem] text-stone-600">
-        Sem spam. Seus dados são tratados conforme a LGPD.
+      <p className="text-center text-xs text-white/30">
+        Sem spam. Apenas seus livros.
       </p>
     </form>
   );
