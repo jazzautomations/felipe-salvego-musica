@@ -47,7 +47,7 @@ export default function FinalCTA() {
             Baixar Grátis
           </a>
           <p className="px-4 text-xs leading-relaxed text-[var(--muted)]">
-            PDF • 54 páginas • Acesso vitalício
+            PDF • 54 páginas • Sem cadastro • Download direto
           </p>
         </div>
       </div>

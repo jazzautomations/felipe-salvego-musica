@@ -28,8 +28,8 @@ const FAQS = [
     a: "Sim. O último capítulo explora as limitações do 12-TET e apresenta sistemas microtonais (24-TET, 31-TET, 53-TET), além do papel da música eletrônica e contemporânea na expansão da paleta harmônica.",
   },
   {
-    q: "Quanto custa e como comprar?",
-    a: "R$ 47,00. A compra é feita diretamente com o autor via WhatsApp ou Instagram. Ao adquirir, você recebe o PDF por e-mail.",
+    q: "Onde baixar o livro?",
+    a: "O livro é 100% gratuito. Clique no botão no final da página — sem cadastro, sem e-mail, só o PDF.",
   },
 ];
 
