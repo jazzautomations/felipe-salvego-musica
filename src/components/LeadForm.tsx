@@ -3,36 +3,45 @@
 import { useState, type FormEvent } from "react";
 import { Download, Check, Loader2, Mail, User } from "lucide-react";
 
+// URL do Apps Script implantado (termina em /exec) — ver apps-script.js na raiz do repo.
+// Definida via NEXT_PUBLIC_GAS_URL no ambiente da Vercel.
+const GAS_URL = process.env.NEXT_PUBLIC_GAS_URL || "";
+
 export default function LeadForm() {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [lgpd, setLgpd] = useState(false);
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
-  const [pdfUrl, setPdfUrl] = useState("");
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     if (!nome.trim() || !email.trim() || !lgpd || loading) return;
 
     setLoading(true);
-    try {
-      const res = await fetch("/api/baixar-lead", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ nome: nome.trim(), email: email.trim() }),
-      });
-      const data = await res.json();
-      if (data.ok) {
-        setPdfUrl(data.pdfUrl || "/livro-musica-matematica.pdf");
-        setDone(true);
+
+    if (GAS_URL) {
+      try {
+        // Apps Script Web Apps não devolvem CORS legível pelo browser — usamos
+        // no-cors e seguimos em frente independente da resposta. A gravação
+        // acontece do lado do Apps Script mesmo sem lermos o corpo aqui.
+        await fetch(GAS_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "text/plain" },
+          body: JSON.stringify({
+            nome: nome.trim(),
+            email: email.trim(),
+            fonte: "landing-musica",
+          }),
+        });
+      } catch {
+        // segue o fluxo mesmo se a gravação falhar — o livro é grátis
       }
-    } catch {
-      setPdfUrl("/livro-musica-matematica.pdf");
-      setDone(true);
-    } finally {
-      setLoading(false);
     }
+
+    setLoading(false);
+    setDone(true);
   }
 
   if (done) {
@@ -44,7 +53,7 @@ export default function LeadForm() {
         </div>
 
         <a
-          href={pdfUrl}
+          href="/livro-musica-matematica.pdf"
           download
           className="btn-primary flex w-full items-center justify-center gap-2"
         >
