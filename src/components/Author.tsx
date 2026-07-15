@@ -48,15 +48,16 @@ export default function Author() {
               <strong className="font-[var(--font-cinzel)] text-[var(--cream)]">
                 Felipe Salvego
               </strong>{" "}
-              é músico multi-instrumentista, compositor e professor. Formado em Música pela
-              Universidade de São Paulo, dedica-se há mais de 15 anos a investigar e traduzir
-              as conexões entre som, ciência e cultura.
+              é músico multi-instrumentista, guitarrista e produtor fonográfico. Formado em
+              Produção Fonográfica pela Fatec de Tatuí e em Guitarra Jazz e MPB pelo Conservatório
+              de Tatuí, dedica-se a investigar e traduzir as conexões entre som, ciência e cultura.
             </p>
             <p>
-              Guitarrista de jazz e MPB, já dividiu o palco com músicos de destaque no circuito
-              independente brasileiro e acumula experiência em estúdio como produtor e arranjador.
-              Sua prática musical está profundamente enraizada na escuta analítica do fenômeno sonoro
-              — o que o levou naturalmente ao estudo da acústica e da história dos sistemas de afinação.
+              Guitarrista de jazz e MPB, já dividiu o palco com a irmã, a cantora e compositora
+              Bebé Salvego, em shows pelo Brasil, e acumula experiência como músico acompanhador,
+              arranjador e produtor de estúdio. Ministra também a oficina &ldquo;Ouvir para
+              Criar&rdquo; no Centro Cultural São Paulo, onde aplica na prática a escuta analítica
+              que fundamenta este livro.
             </p>
             <p>
               <strong className="text-[var(--gold-2)]">
