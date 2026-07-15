@@ -48,15 +48,20 @@ export default function Author() {
               <strong className="font-[var(--font-cinzel)] text-[var(--cream)]">
                 Felipe Salvego
               </strong>{" "}
-              é músico multi-instrumentista, guitarrista e produtor fonográfico. Formado em
-              Produção Fonográfica pela Fatec de Tatuí e em Guitarra Jazz e MPB pelo Conservatório
-              de Tatuí, dedica-se a investigar e traduzir as conexões entre som, ciência e cultura.
+              é músico multi-instrumentista, guitarrista e produtor fonográfico, natural de
+              Piracicaba (SP). Formado em Produção Fonográfica pela Fatec de Tatuí e em Guitarra
+              Jazz e MPB pelo Conservatório de Tatuí, cresceu numa família de música — filho de
+              um violonista e de uma produtora musical — e transita com a mesma naturalidade entre
+              Bob Dylan, Chet Baker, Tom Jobim e Pink Floyd.
             </p>
             <p>
-              Guitarrista de jazz e MPB, já dividiu o palco com a irmã, a cantora e compositora
-              Bebé Salvego, em shows pelo Brasil, e acumula experiência como músico acompanhador,
-              arranjador e produtor de estúdio. Ministra também a oficina &ldquo;Ouvir para
-              Criar&rdquo; no Centro Cultural São Paulo, onde aplica na prática a escuta analítica
+              É parceiro musical constante da irmã, a cantora e compositora Bebé Salvego: assina
+              com ela a produção completa do álbum <em>Dissolução</em> (2026) e já subiu ao palco
+              em shows como o do Estúdio Pulso e do Centro Cultural São Paulo. Tocou também as
+              rodas de jazz do tradicional Bourbon Street Music Club, em São Paulo. Como educador,
+              criou o curso &ldquo;Gypsy Jazz e Ritmos Brasileiros&rdquo;, contemplado pelo edital
+              ProAC do Governo do Estado de São Paulo, e ministra ao lado de Bebé a oficina
+              &ldquo;Ouvir para Criar&rdquo; no CCSP — onde aplica na prática a escuta analítica
               que fundamenta este livro.
             </p>
             <p>
