@@ -4,8 +4,10 @@ import { useState, type FormEvent } from "react";
 import { Download, Check, Loader2, Mail, User } from "lucide-react";
 
 // URL do Apps Script implantado (termina em /exec) — ver apps-script.js na raiz do repo.
-// Definida via NEXT_PUBLIC_GAS_URL no ambiente da Vercel.
-const GAS_URL = process.env.NEXT_PUBLIC_GAS_URL || "";
+// Pode ser sobrescrita via NEXT_PUBLIC_GAS_URL no ambiente da Vercel.
+const GAS_URL =
+  process.env.NEXT_PUBLIC_GAS_URL ||
+  "https://script.google.com/macros/s/AKfycbyblKvsYvDSbEYgfRYJ3hHuz9_LoAcxXbSefmj_puAXpiPg7zcEG5K2az-HXhdBxshS/exec";
 
 export default function LeadForm() {
   const [nome, setNome] = useState("");
