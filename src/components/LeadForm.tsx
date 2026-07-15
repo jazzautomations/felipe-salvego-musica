@@ -119,7 +119,7 @@ export default function LeadForm() {
         ) : (
           <>
             <Download className="size-4" />
-            Baixar Grátis
+            Quero Entender
           </>
         )}
       </button>

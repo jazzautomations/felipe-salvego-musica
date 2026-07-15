@@ -36,11 +36,11 @@ export const metadata: Metadata = {
   title:
     "A Música e a Matemática da Natureza | Felipe Salvego",
   description:
-    "Das origens antigas ao temperamento ocidental — a física do som que moldou a música ocidental, o blues e os sistemas modais do mundo árabe, turco e indiano. Série Fundamentos da Música • Volume I.",
+    "Por que sua oitava tem 12 notas? Descubra o erro matemático de 2.500 anos que moldou toda a música ocidental. Livro gratuito de Felipe Salvego.",
   openGraph: {
     title: "A Música e a Matemática da Natureza",
     description:
-      "A física do som que moldou a música ocidental, o blues e os sistemas modais do mundo árabe, turco e indiano.",
+      "Por que sua oitava tem 12 notas? Descubra o erro matemático de 2.500 anos que moldou toda a música ocidental.",
     type: "book",
     locale: "pt_BR",
   },

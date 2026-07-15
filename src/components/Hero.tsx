@@ -48,15 +48,15 @@ export default function Hero() {
           </span>
 
           <h1 className="reveal mt-4 font-[var(--font-cinzel)] text-[clamp(1.75rem,5.5vw,3.2rem)] font-bold leading-[1.1] tracking-tight text-[var(--cream)]">
-            A Música e a{" "}
-            <span className="text-[var(--gold-2)]">
-              Matemática da Natureza
-            </span>
+            Por que sua oitava tem{" "}
+            <span className="text-[var(--gold-2)]">12 notas</span> e não 11
+            ou 13?
           </h1>
 
           <p className="reveal mx-auto mt-5 max-w-md text-[clamp(0.85rem,1.5vw,1rem)] leading-relaxed text-[var(--cream-dim)] md:mx-0">
-            Física · Matemática · História · Cultura — das origens antigas ao
-            temperamento igual, a jornada dos intervalos que organizam o som.
+            A resposta envolve um erro matemático de 2.500 anos que ninguém
+            te contou — e que está escondido em todo acorde que você já
+            tocou.
           </p>
 
           <p className="reveal mt-2 text-[0.75rem] italic text-[var(--muted)]">
@@ -65,7 +65,7 @@ export default function Hero() {
 
           <div className="reveal mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-start">
             <a href="#baixar" className="btn-primary">
-              Baixar grátis
+              Quero entender
             </a>
             <a href="#livro" className="btn-secondary">
               Sobre o livro

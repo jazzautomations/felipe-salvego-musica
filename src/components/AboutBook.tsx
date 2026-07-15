@@ -59,30 +59,31 @@ export default function AboutBook() {
 
             <div className="mt-6 space-y-4 text-[clamp(0.82rem,1.5vw,0.92rem)] leading-[1.7] text-[var(--cream-dim)]">
               <p>
-                Por que uma oitava tem 12 notas? De onde vêm os intervalos
-                musicais? O que Pitágoras tem a ver com a Série Harmônica?
-                <strong className="text-[var(--cream)]">
-                  {" "}Este livro responde a essas perguntas{" "}
-                </strong>
-                conectando a prática musical à matemática e à física que a
-                sustentam.
+                Você já tocou uma nota e sentiu que ela &ldquo;bateria&rdquo;
+                com outra? Isso não é achismo —{" "}
+                <strong className="text-[var(--cream)]">é matemática</strong>.
+                Quando Pitágoras tocou uma corda pela metade, ele não
+                descobriu uma nota. Ele descobriu que o universo inteiro
+                fala em proporções.
               </p>
               <p>
-                A jornada começa na descoberta de Pitágoras — a primeira
-                pessoa a provar que os sons têm forma — e avança pela
-                história da afinação: dos monacórdios medievais ao
-                temperamento igual de 12 tons (12-TET), passando pelos
-                problemas não resolvidos que atormentaram músicos durante
-                séculos.
+                Mas aqui vai o que ninguém te conta: as proporções não
+                fecham.{" "}
+                <strong className="text-[var(--cream)]">
+                  Existe um erro matemático escondido no fundo de todo
+                  instrumento
+                </strong>
+                , em cada acorde que você já tocou — um erro de 23 cents,
+                menor que um semitom, que mudou a história da música.
               </p>
               <p>
-                Você vai entender por que{" "}
                 <strong className="text-[var(--cream)]">
-                  o comma pitagórico atormentou a música ocidental
-                </strong>
-                , como o sistema de 12 tons se consolidou, e onde o
-                microtonalismo e a música contemporânea expandem os limites
-                do que ouvimos.
+                  Este livro é sobre esse erro
+                </strong>{" "}
+                — e sobre como a humanidade, dos monacórdios medievais ao
+                temperamento igual de 12 tons (12-TET), aprendeu a conviver
+                com ele. No caminho, você vai entender onde o microtonalismo
+                e a música contemporânea expandem os limites do que ouvimos.
               </p>
             </div>
 

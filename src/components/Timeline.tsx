@@ -3,18 +3,18 @@
 import { useEffect, useRef } from "react";
 
 const ITEMS = [
-  { year: "~500 a.C.", event: "Pitágoras descobre que cordas vibrantes produzem razões simples — nasce a relação entre números e sons." },
-  { year: "~350 a.C.", event: "Aristóxeno de Tarento sistematiza a teoria musical grega e critica a abordagem puramente matemática de Pitágoras." },
-  { year: "Séc. I d.C.", event: "Ptolomeu escreve Harmônica, refinando os intervalos consonantes e propondo o tetracorde dítônico." },
-  { year: "~1026", event: "Guido d'Arezzo inventa a pauta musical e nomeia as notas (Ut, Re, Mi, Fa, Sol, La), organizando o canto gregoriano." },
-  { year: "~1300", event: "Philippe de Vitry escreve Ars Nova, formalizando a notação rítmica e a síncope na música polifônica." },
-  { year: "~1490", event: "Franchino Gaffurio publica Theorica Musicae, conectando a música renascentista à tradição pitagórica." },
-  { year: "~1585", event: "Vincenzo Galilei (pai de Galileu) questiona o sistema pitagórico, abrindo caminho para novos temperamentos." },
-  { year: "~1636", event: "Marin Mersenne publica Harmonie Universelle, descrevendo leis da corda vibrante e frequências." },
-  { year: "~1691", event: "Andreas Werckmeister sistematiza o temperamento igual de 12 sons (12-TET), viabilizando a música tonal moderna." },
-  { year: "~1722", event: "Bach compõe O Cravo Bem-Temperado, demonstrando na prática a viabilidade do sistema 12-TET." },
-  { year: "~1860", event: "Hermann von Helmholtz publica O Sentido dos Tons, unificando acústica, fisiologia auditiva e teoria musical." },
-  { year: "Atual", event: "O microtonalismo e a música eletrônica expandem os limites do 12-TET, explorando divisões mais finas da oitava." },
+  { year: "~500 a.C.", event: "Pitágoras toca uma corda. Pela metade. O som dobra de altura. Ele não entende por quê — mas sabe que acaba de descobrir algo sobre o universo." },
+  { year: "~350 a.C.", event: "Aristóxeno questiona: será que música é só matemática? Ou tem algo mais? A polêmica começa — e nunca mais termina." },
+  { year: "Séc. I d.C.", event: "Ptolomeu tenta pôr ordem no caos: em Harmônica, refina os intervalos consonantes e propõe o tetracorde dítônico." },
+  { year: "~1026", event: "Guido d'Arezzo inventa a pauta musical. As notas ganham nome — Ut, Re, Mi, Fa, Sol, La. A música ganha linguagem." },
+  { year: "~1300", event: "Philippe de Vitry escreve Ars Nova e formaliza a síncope. Pela primeira vez, o ritmo pode ser escrito com precisão." },
+  { year: "~1490", event: "Franchino Gaffurio publica Theorica Musicae, ligando a música renascentista de volta à raiz pitagórica." },
+  { year: "~1585", event: "Vincenzo Galilei (pai de Galileu) enfrenta o establishment: “as proporções de Pitágoras não funcionam”. Ele tem razão." },
+  { year: "~1636", event: "Marin Mersenne descreve as leis da corda vibrante em Harmonie Universelle — a física finalmente alcança o ouvido." },
+  { year: "~1691", event: "Werckmeister resolve o problema que atormentou a música por 2.000 anos: divide a oitava em 12 partes iguais. Nasce o 12-TET." },
+  { year: "~1722", event: "Bach compõe O Cravo Bem-Temperado. Prova, na prática, que o novo sistema funciona. A música ocidental nunca mais é a mesma." },
+  { year: "~1860", event: "Helmholtz publica O Sentido dos Tons e conecta, pela primeira vez, acústica, ouvido e teoria musical num só corpo de ideias." },
+  { year: "Atual", event: "O microtonalismo e a música eletrônica voltam a fazer a pergunta de Pitágoras: e se a oitava não precisasse parar em 12?" },
 ];
 
 export default function Timeline() {

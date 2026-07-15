@@ -5,27 +5,27 @@ import { useEffect, useRef } from "react";
 const REASONS = [
   {
     title: "Músicos",
-    desc: "Entenda de onde vêm os intervalos que você toca, por que a oitava tem 12 notas e o que é o temperamento igual — a base da música ocidental.",
+    desc: "Você sabe que uma quinta perfeita “soa certa”. Mas não sabe por quê. Aqui está a matemática que seu ouvido já sabe — e que sua mente vai querer entender.",
   },
   {
     title: "Estudantes de Música",
-    desc: "O conteúdo de teoria musical aplicada que escolas não ensinam: a física do som, a história da afinação e a matemática dos intervalos.",
+    desc: "As escolas ensinam a ler partitura. Ninguém ensina por que ela funciona. Aqui você entende a mecânica por trás da música — e nunca mais olha pra uma nota do mesmo jeito.",
   },
   {
     title: "Curiosos e Autodidatas",
-    desc: "Se você já se perguntou por que algumas notas soam bem juntas e outras não, este livro traduz o fenômeno em linguagem acessível.",
+    desc: "Por que certas frequências juntas causam prazer e outras causam desconforto? Não é gosto — é física. Quando você entende a física, começa a ouvir o mundo de outro jeito.",
   },
   {
     title: "Produtores e Compositores",
-    desc: "Domine os fundamentos acústicos que moldam timbre, harmonia e afinação — da escolha de samples ao design sonoro.",
+    desc: "Todo sample que você já usou carrega uma história matemática. Quando você entende essa história, para de chutar e começa a criar com intenção.",
   },
   {
     title: "Matemáticos e Físicos",
-    desc: "Uma aplicação concreta e bela de proporções, logaritmos e séries infinitas no mundo real dos sons.",
+    desc: "Série Harmônica, logaritmos, proporções irracionais — tudo isso existe na natureza e na sua orelha. A matemática mais bonita que você nunca viu na escola.",
   },
   {
     title: "Professores e Educadores",
-    desc: "Material de apoio raro em português para conectar música, matemática e física em sala de aula.",
+    desc: "O material que faltava em português: conecta música, matemática e física de um jeito que o aluno entende — e se empolga.",
   },
 ];
 

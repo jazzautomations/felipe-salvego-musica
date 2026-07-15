@@ -5,11 +5,11 @@ import { useState, useRef, useEffect } from "react";
 const FAQS = [
   {
     q: "Preciso saber matemática para ler este livro?",
-    a: "Não. O livro usa matemática do ensino fundamental — frações, proporções e noções básicas de logaritmos explicadas no texto. O foco é sempre musical.",
+    a: "Não. Se você sabe dividir uma pizza em fatias iguais, já tem a base. O livro ensina o resto — frações, proporções e noções básicas de logaritmos explicadas no texto — e o foco é sempre musical, nunca fórmula.",
   },
   {
     q: "O que é o comma pitagórico?",
-    a: "É o 'problema' que surge quando afinamos 12 quintas perfeitas empilhadas — elas não fecham um ciclo de 7 oitavas. Sobra uma diferença de aproximadamente 23,46 cents, quase um quarto de semitom. Esse resto é o comma pitagórico, e resolver isso (ou conviver com isso) é o tema central da história da afinação ocidental.",
+    a: "É o problema que Pitágoras não resolveu: quando você empilha 12 quintas perfeitas, elas não voltam ao ponto de partida — sobra uma diferença de aproximadamente 23,46 cents, quase um quarto de semitom. Esse resto é o comma pitagórico, e resolver isso (ou conviver com ele) é o tema central da história da afinação ocidental.",
   },
   {
     q: "O que significa 12-TET?",

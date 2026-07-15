@@ -38,14 +38,15 @@ export default function FinalCTA() {
         </span>
 
         <h2 className="reveal mt-4 font-[var(--font-cinzel)] text-[clamp(1.75rem,5vw,2.75rem)] font-light leading-[1.2] tracking-tight text-[var(--cream)]">
-          Leve a música e a{" "}
-          <span className="font-semibold text-[var(--gold-2)]">matemática da natureza</span>{" "}
-          com você
+          O livro é grátis. Mas o que você vai{" "}
+          <span className="font-semibold text-[var(--gold-2)]">entender</span> não
+          tem preço.
         </h2>
 
         <p className="reveal mx-auto mt-4 max-w-lg text-[clamp(0.85rem,1.5vw,0.95rem)] leading-relaxed text-[var(--cream-dim)]">
-          Preencha abaixo e receba o PDF completo na hora. Sem spam, sem pegadinha — é só o
-          livro e, de vez em quando, novidades sobre música e matemática.
+          150+ páginas que conectam Pitágoras ao seu tímpano. Matemática que você
+          sente antes de entender. Preencha, baixe, leia — depois você não
+          consegue mais parar de pensar nisso.
         </p>
 
         <div className="reveal mx-auto mt-10 max-w-md">
