@@ -59,12 +59,14 @@ export default function AboutBook() {
 
             <div className="mt-6 space-y-4 text-[clamp(0.82rem,1.5vw,0.92rem)] leading-[1.7] text-[var(--cream-dim)]">
               <p>
-                Você já tocou uma nota e sentiu que ela &ldquo;bateria&rdquo;
-                com outra? Isso não é achismo —{" "}
-                <strong className="text-[var(--cream)]">é matemática</strong>.
-                Quando Pitágoras tocou uma corda pela metade, ele não
-                descobriu uma nota. Ele descobriu que o universo inteiro
-                fala em proporções.
+                Essa convergência entre som, número e existência não é um
+                assunto abstrato — ela mora dentro de qualquer instrumento
+                que você já tocou.{" "}
+                <strong className="text-[var(--cream)]">
+                  Toda vez que uma quinta soou “certa” pro seu ouvido
+                </strong>
+                , foi uma razão matemática simples — 2 para 3 — conversando
+                direto com a sua percepção, sem passar pela sua consciência.
               </p>
               <p>
                 Mas aqui vai o que ninguém te conta: as proporções não

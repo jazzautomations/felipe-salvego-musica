@@ -36,11 +36,11 @@ export const metadata: Metadata = {
   title:
     "A Música e a Matemática da Natureza | Felipe Salvego",
   description:
-    "Por que sua oitava tem 12 notas? Descubra o erro matemático de 2.500 anos que moldou toda a música ocidental. Livro gratuito de Felipe Salvego.",
+    "Tudo é número. Tudo é som. Um erro matemático de 2.500 anos escondido em toda música que você já ouviu — e o que ele revela sobre física, natureza e você. Livro gratuito de Felipe Salvego.",
   openGraph: {
     title: "A Música e a Matemática da Natureza",
     description:
-      "Por que sua oitava tem 12 notas? Descubra o erro matemático de 2.500 anos que moldou toda a música ocidental.",
+      "Tudo é número. Tudo é som. O erro matemático de 2.500 anos escondido em toda música que você já ouviu.",
     type: "book",
     locale: "pt_BR",
   },

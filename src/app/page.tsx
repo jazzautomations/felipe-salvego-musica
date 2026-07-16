@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
+import Convergence from "@/components/Convergence";
 import AboutBook from "@/components/AboutBook";
 import WhyRead from "@/components/WhyRead";
 import Timeline from "@/components/Timeline";
@@ -14,6 +15,7 @@ export default function Home() {
     <>
       <Navbar />
       <Hero />
+      <Convergence />
       <AboutBook />
       <WhyRead />
       <Timeline />
