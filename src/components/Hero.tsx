@@ -48,16 +48,16 @@ export default function Hero() {
           </span>
 
           <h1 className="reveal mt-4 font-[var(--font-cinzel)] text-[clamp(1.75rem,5.5vw,3.2rem)] font-bold leading-[1.1] tracking-tight text-[var(--cream)]">
-            Existe um erro de{" "}
-            <span className="text-[var(--gold-2)]">2.500 anos</span> escondido
-            em toda música que você já ouviu.
+            Por que a oitava tem{" "}
+            <span className="text-[var(--gold-2)]">12 notas</span> — e não 11,
+            nem 13?
           </h1>
 
           <p className="reveal mx-auto mt-5 max-w-md text-[clamp(0.85rem,1.5vw,1rem)] leading-relaxed text-[var(--cream-dim)] md:mx-0">
-            E ele prova algo estranho sobre o universo: a física de uma nota
-            é a mesma física de uma cor, de um átomo, do seu coração batendo.
-            Isso não é metáfora — é matemática. E este livro te leva fundo
-            nela, do jeito que ninguém te ensinou.
+            A resposta envolve um erro matemático de 2.500 anos que ninguém
+            te contou. E ele prova algo estranho sobre o universo: a física
+            de uma nota é a mesma física de uma cor, de um átomo, do seu
+            coração batendo. Isso não é metáfora — é matemática.
           </p>
 
           <p className="reveal mt-2 text-[0.75rem] italic text-[var(--muted)]">
