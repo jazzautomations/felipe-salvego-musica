@@ -48,16 +48,16 @@ export default function Hero() {
           </span>
 
           <h1 className="reveal mt-4 font-[var(--font-cinzel)] text-[clamp(1.75rem,5.5vw,3.2rem)] font-bold leading-[1.1] tracking-tight text-[var(--cream)]">
-            Todo acorde que você já tocou carrega um{" "}
-            <span className="text-[var(--gold-2)]">erro de 2.500 anos</span>.
+            Toda música é uma{" "}
+            <span className="text-[var(--gold-2)]">alquimia antiga</span> —
+            transforma número em magia.
           </h1>
 
           <p className="reveal mx-auto mt-5 max-w-md text-[clamp(0.85rem,1.5vw,1rem)] leading-relaxed text-[var(--cream-dim)] md:mx-0">
-            Pitágoras descobriu essa falha matemática — e ninguém nunca a
-            resolveu, só aprendeu a escondê-la. Ela prova algo estranho sobre
-            o universo: a física de uma nota é a mesma física de uma cor, de
-            um átomo, do seu coração batendo. Isso não é metáfora — é
-            matemática.
+            Pitágoras foi o primeiro alquimista do som: descobriu que a mesma
+            proporção sagrada que afina uma corda desenha as estrelas, pinta
+            as cores, faz seu coração bater. Matemática e magia sempre foram
+            a mesma língua.
           </p>
 
           <p className="reveal mt-2 text-[0.75rem] italic text-[var(--muted)]">
